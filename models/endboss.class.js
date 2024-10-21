@@ -1,0 +1,33 @@
+class Endboss extends MovableObject {
+    y = 140;
+    height = 300;
+    width = 250;
+
+    IMAGES_ALERT = [
+        'img/4_enemie_boss_chicken/2_alert/G5.png',
+        'img/4_enemie_boss_chicken/2_alert/G6.png',
+        'img/4_enemie_boss_chicken/2_alert/G7.png',
+        'img/4_enemie_boss_chicken/2_alert/G8.png',
+        'img/4_enemie_boss_chicken/2_alert/G9.png',
+        'img/4_enemie_boss_chicken/2_alert/G10.png',
+        'img/4_enemie_boss_chicken/2_alert/G11.png',
+        'img/4_enemie_boss_chicken/2_alert/G12.png',
+    ]
+    
+    constructor() {
+        super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
+        this.x  = 500;    // Spawnlocation of the chickens
+        // this.speed = 0.2 + Math.random() * 0.25;    // Speed of the chickens
+        this.loadImages(this.IMAGES_ALERT);
+        this.animate();
+    }
+
+    animate() {
+        setInterval(() => {
+            let i = this.currentImage % this.IMAGES_ALERT.length;
+            let path = this.IMAGES_ALERT[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, 200);
+    }
+}
