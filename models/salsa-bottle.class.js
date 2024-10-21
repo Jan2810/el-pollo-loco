@@ -1,5 +1,5 @@
 class SalsaBottle extends MovableObject {
-    y = 350;
+    y = 345;
     height = 80;
     width = 80;
 
