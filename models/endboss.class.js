@@ -24,10 +24,7 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_ALERT.length;
-            let path = this.IMAGES_ALERT[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_ALERT)
         }, 200);
     }
 }
