@@ -6,6 +6,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    // backgroundMusic = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -13,10 +14,29 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
+        // this.playBackgroundMusic();
     }
+
+    // playBackgroundMusic() {
+    //     this.backgroundMusic.volume = 0.3;
+    //     this.backgroundMusic.play();
+    //     this.backgroundMusic.loop = true;
+    // }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    console.log('Collision... energy =', this.character.energy)
+                }
+            });
+        }, 1000);
     }
 
     draw() {
@@ -48,15 +68,25 @@ class World {
 
     addToMap(object) {
         if (object.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(object.width, 0)
-            this.ctx.scale(-1, 1);
-            object.x = object.x * -1
+            this.flipImage(object);
         }
-        this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
+        object.draw(this.ctx);
+        object.drawFrame(this.ctx);
+
         if (object.otherDirection) {
-            object.x = object.x * -1
-            this.ctx.restore();
+            this.flipImageBack(object);
         }
+    }
+
+    flipImage(object) {
+        this.ctx.save();
+        this.ctx.translate(object.width, 0)
+        this.ctx.scale(-1, 1);
+        object.x = object.x * -1
+    }
+
+    flipImageBack(object) {
+        object.x = object.x * -1
+        this.ctx.restore();
     }
 }
