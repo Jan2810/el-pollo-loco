@@ -6,6 +6,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    statusbar = new Statusbar();
     // backgroundMusic = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard) {
@@ -33,6 +34,7 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
+                    this.statusbar.setPercentage(this.character.energy)
                 }
             });
         }, 1000);
@@ -48,6 +50,10 @@ class World {
         this.addObjectsToMap(this.level.salsaBottle);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
+        
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar);
+        this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
 
