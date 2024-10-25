@@ -7,6 +7,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusbar = new Statusbar();
+    throwableObject = [];
     // backgroundMusic = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard) {
@@ -15,7 +16,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
         // this.playBackgroundMusic();
     }
 
@@ -29,16 +30,30 @@ class World {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusbar.setPercentage(this.character.energy)
-                }
-            });
-        }, 1000);
+            this.checkCollisions();
+            this.throwObjects();
+        }, 200);
     }
+
+    throwObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200);
+            this.throwableObject.push(bottle)
+        }
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        });
+    }
+
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -50,6 +65,7 @@ class World {
         this.addObjectsToMap(this.level.salsaBottle);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObject);
         
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusbar);
