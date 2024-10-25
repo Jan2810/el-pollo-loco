@@ -6,7 +6,12 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusbar = new Statusbar();
+    statusbar = [
+        new Bottlebar(),
+        new Energybar(),
+        new Coinbar(),
+    ];
+
     throwableObject = [];
     // backgroundMusic = new Audio('audio/music.mp3');
 
@@ -48,7 +53,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusbar.setPercentage(this.character.energy)
+                this.statusbar[1].setPercentage(this.character.energy)
             }
         });
     }
@@ -68,7 +73,7 @@ class World {
         this.addObjectsToMap(this.throwableObject);
         
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar);
+        this.addObjectsToMap(this.statusbar);
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
