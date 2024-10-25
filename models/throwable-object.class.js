@@ -15,27 +15,38 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ];
+    offsetTop = 20;
+    offsetBottom = 40;
+    offsetLeft = 30;
+    offsetRight = 60;
+    keyboard;
 
-    constructor(x, y) {
+    constructor(x, y , keyboard) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
+        this.loadImages(this.IMAGES_ROTATION);
+        this.keyboard = keyboard;
         this.height = 80;
         this.width = 80;
-        this.x = x;
         this.y = y;
+        this.x = x;
         this.throw();
+        this.animate();
     }
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 35;
         this.applyGravity();
         setInterval(() => {
-            this.x += 10;
-        }, 25);
+            this.x += 12;
+        }, 30);
     }
 
     animate (x, y) {
-        if (this.world.keyboard.D) {
+        if (this.keyboard.D) {
             this.throw(x, y);
+            setInterval(() => {
+                this.playAnimation(this.IMAGES_ROTATION);
+            }, 80);
         }
     }
 }

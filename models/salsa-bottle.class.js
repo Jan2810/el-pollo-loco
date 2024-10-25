@@ -18,6 +18,10 @@ class SalsaBottle extends MovableObject {
     y = 345;
     height = 80;
     width = 80;
+    offsetTop = 75;
+    offsetBottom = 140;
+    offsetLeft = 35;
+    offsetRight = 50;
 
     constructor(path, x) {
         super().loadImage(path);

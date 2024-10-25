@@ -44,7 +44,7 @@ class World {
 
     throwObjects() {
         if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200);
+            let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
             this.throwableObject.push(bottle)
         }
     }
@@ -98,6 +98,7 @@ class World {
         }
         object.draw(this.ctx);
         object.drawFrame(this.ctx);
+        object.drawCollisionFrame(this.ctx);
 
         if (object.otherDirection) {
             this.flipImageBack(object);

@@ -1,4 +1,4 @@
-class MovableObject extends DrawableObject{
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject{
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-        return true;
+            return true;
         } else {
             return this.y < 150;;
         }
@@ -29,11 +29,18 @@ class MovableObject extends DrawableObject{
     //         this.y <= (object.y + object.height);
     // }
 
+    // isColliding(object) {
+    //     return (this.x + this.width) >= object.X && this.X <= (object.X + object.width) &&
+    //         (this.y + this.offsetY + this.height) >= object.y &&
+    //         (this.y + this.offsetY) <= (object.y + object.height)
+    //         // object.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+    // }
+
     isColliding(object) {
-        return (this.x + this.width) >= object.X && this.X <= (object.X + object.width) &&
-            (this.y + this.offsetY + this.height) >= object.y &&
-            (this.y + this.offsetY) <= (object.y + object.height)
-            // object.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+        return this.x + this.width - this.offsetRight > object.x + object.offsetLeft &&
+            this.y + this.height - this.offsetBottom > object.y + object.offsetTop &&
+            this.x + this.offsetLeft < object.x + object.width - this.offsetRight &&
+            this.y + this.offsetTop < object.y + object.height - this.offsetBottom;
     }
 
     hit() {
@@ -41,7 +48,7 @@ class MovableObject extends DrawableObject{
         if (this.energy < 0) {
             this.energy = 0;
         } else {
-            this.lastHit =  new Date().getTime();;
+            this.lastHit = new Date().getTime();;
         }
     }
 
