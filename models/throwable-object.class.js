@@ -46,7 +46,7 @@ class ThrowableObject extends MovableObject {
             this.throw(x, y);
             setInterval(() => {
                 this.playAnimation(this.IMAGES_ROTATION);
-            }, 80);
+            }, 100);
         }
     }
 }
