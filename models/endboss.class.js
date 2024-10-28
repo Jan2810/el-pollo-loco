@@ -50,8 +50,7 @@ class Endboss extends MovableObject {
     
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
-        this.x  = 3800;    // Spawnlocation of the chickens
-        // this.speed = 0.2 + Math.random() * 0.25;    // Speed of the chickens
+        this.x  = 3800;
         this.loadImages(this.IMAGES_ALERT);
         this.animate();
     }
