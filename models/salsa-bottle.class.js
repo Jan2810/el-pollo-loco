@@ -18,9 +18,9 @@ class SalsaBottle extends MovableObject {
     y = 345;
     height = 80;
     width = 80;
-    offsetTop = 75;
-    offsetBottom = 140;
-    offsetLeft = 35;
+    offsetTop = 10;
+    offsetBottom = 10;
+    offsetLeft = 30;
     offsetRight = 15;
 
     constructor(path, x) {
