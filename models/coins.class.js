@@ -5,7 +5,7 @@ class Coin extends MovableObject {
     offsetTop = 40;
     offsetBottom = 80;
     offsetLeft = 40;
-    offsetRight = 80;
+    offsetRight = 40;
 
     IMAGES_PULSE = [
         'img/8_coin/coin_1.png',
