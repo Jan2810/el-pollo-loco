@@ -56,7 +56,7 @@ class World {
     checkBottleCollision(bottle, index) {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (bottle.isColliding(enemy)) {
+                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
                     this.level.enemies.splice(index, 1);
                 }
             });
