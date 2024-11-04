@@ -45,11 +45,22 @@ class World {
     }
 
     throwObjects() {
-            if (this.keyboard.D && this.statusbar[0].amount > 0) {
-                let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
-                this.throwableObject.push(bottle);
-                this.statusbar[0].reduceAmount();
-            }      // else play error sound
+        if (this.keyboard.D && this.statusbar[0].amount > 0) {
+            let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
+            this.throwableObject.push(bottle);
+            this.statusbar[0].reduceAmount();
+            this.checkBottleCollision(bottle);
+        }      // else play error sound
+    }
+
+    checkBottleCollision(bottle, index) {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    this.level.enemies.splice(index, 1);
+                }
+            });
+        }, 5);
     }
 
     checkCollisions() {
