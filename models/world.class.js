@@ -55,11 +55,13 @@ class World {
 
     checkBottleCollision(bottle, index) {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
+            for (let i = 0; i < this.level.enemies.length; i++) {
+                let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
-                    this.level.enemies.splice(index, 1);
+                    enemy.isKilled = true;
+                    // this.level.enemies.splice(i, 1); // Optional: Entferne den Feind, wenn er getötet wird
                 }
-            });
+            }
         }, 5);
     }
 

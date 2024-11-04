@@ -9,6 +9,7 @@ class Chicken extends MovableObject {
     offsetLeft = 5;
     offsetRight = 5;
     isMovingLeft = true;
+    isKilled = false;
 
 
     IMAGES_WALKING = [
@@ -37,6 +38,13 @@ class Chicken extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING)
         }, 200);
+
+        setInterval(() => {
+            if (this.isKilled) {
+                this.loadImage(this.IMAGES_DEAD)
+            }
+        }, 200);
     }
 
+    
 }
