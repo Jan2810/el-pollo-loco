@@ -30,12 +30,28 @@ class BabyChicken extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-            this.moveLeft();
+        // Store intervals in variables
+        let moveInterval = setInterval(() => {
+            if (!this.isKilled) {
+                this.moveLeft();
+            } else {
+                clearInterval(moveInterval); // Stop moving when killed
+            }
         }, 1000 / 60);
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING)
+        let walkingAnimationInterval = setInterval(() => {
+            if (!this.isKilled) {
+                this.playAnimation(this.IMAGES_WALKING);
+            } else {
+                clearInterval(walkingAnimationInterval); // Stop walking animation when killed
+            }
+        }, 200);
+
+        let deathCheckInterval = setInterval(() => {
+            if (this.isKilled) {
+                this.loadImage(this.IMAGES_DEAD);
+                clearInterval(deathCheckInterval); // Stop checking once the image is loaded
+            }
         }, 200);
     }
 
