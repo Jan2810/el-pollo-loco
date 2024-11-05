@@ -24,6 +24,7 @@ class ThrowableObject extends MovableObject {
     constructor(x, y , keyboard) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_ROTATION);
+        this.loadImages(this.IMAGES_SPLASH);
         this.keyboard = keyboard;
         this.height = 80;
         this.width = 80;
@@ -48,5 +49,9 @@ class ThrowableObject extends MovableObject {
                 this.playAnimation(this.IMAGES_ROTATION);
             }, 100);
         }
+    }
+
+    splashAnimation() {
+        this.playAnimation(this.IMAGES_SPLASH);
     }
 }
