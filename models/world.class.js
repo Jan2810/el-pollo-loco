@@ -59,7 +59,7 @@ class World {
                 let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
                     enemy.isKilled = true;
-                    this.level.enemies.splice(i, 1); // Optional: Entferne den Feind, wenn er getötet wird
+                    // this.level.enemies.splice(i, 1); // Optional: Entferne den Feind, wenn er getötet wird
                 }
             }
         }, 5);
@@ -67,7 +67,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && enemy.isActive) {
                 this.character.hit();
                 this.statusbar[1].setPercentage(this.character.energy)
             }
