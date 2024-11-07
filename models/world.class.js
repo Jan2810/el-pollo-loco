@@ -41,7 +41,7 @@ class World {
             this.checkBottleCollections();
             this.checkCoinCollections();
             this.throwObjects();
-        }, 200);
+        }, 100);
     }
 
     throwObjects() {
@@ -68,7 +68,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isActive && this.character.isCollidingFromAbove(enemy)) {
+            if (enemy.isActive && this.character.speedY < 1 && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
                 this.character.bounce();
