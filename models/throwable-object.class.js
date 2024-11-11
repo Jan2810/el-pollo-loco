@@ -21,7 +21,7 @@ class ThrowableObject extends MovableObject {
     offsetRight = 60;
     keyboard;
 
-    constructor(x, y , keyboard) {
+    constructor(x, y, keyboard) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_ROTATION);
         this.loadImages(this.IMAGES_SPLASH);
@@ -38,11 +38,11 @@ class ThrowableObject extends MovableObject {
         this.speedY = 35;
         this.applyGravity();
         setInterval(() => {
-            this.x += 12;
-        }, 30);
+            this.x += 18;
+        }, 40);
     }
 
-    animate (x, y) {
+    animate(x, y) {
         if (this.keyboard.D) {
             this.throw(x, y);
             setInterval(() => {
@@ -51,7 +51,20 @@ class ThrowableObject extends MovableObject {
         }
     }
 
-    splashAnimation() {
-        this.playAnimation(this.IMAGES_SPLASH);
+    playSplashAnimation(x, y) {
+        let currentImage = 0;
+        let interval = setInterval(() => {
+            if (currentImage < this.IMAGES_SPLASH.length) {
+                this.loadImage(this.IMAGES_SPLASH[currentImage]);
+                this.x = x;
+                this.y = y;
+                currentImage++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 33);
     }
+    
+
+
 }

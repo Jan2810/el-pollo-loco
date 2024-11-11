@@ -60,19 +60,19 @@ class World {
                 if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
                     enemy.isKilled = true;
                     enemy.isActive = false;
-                    bottle.splashAnimation();
+                    bottle.playSplashAnimation(enemy.x, enemy.y);
                 }
             }
-        }, 50);
+        }, 10);
     }
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isActive && this.character.speedY < 1 && this.character.isColliding(enemy)) {
+            if (enemy.isActive && this.character.speedY < 0 && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
                 this.character.bounce();
-                console.log('is colliding with', enemy);
+                // console.log('is colliding with', enemy);
             } else if (enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar[1].setPercentage(this.character.energy)

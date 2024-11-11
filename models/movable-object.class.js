@@ -10,10 +10,15 @@ class MovableObject extends DrawableObject {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration
+                this.speedY -= this.acceleration;
+            }
+            if (this instanceof Character && this.y > 150) {
+                this.y = 150;
+                this.speedY = 0;
             }
         }, 1000 / 25);
     }
+    
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
