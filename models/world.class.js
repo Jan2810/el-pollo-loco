@@ -72,7 +72,6 @@ class World {
                 enemy.isKilled = true;
                 enemy.isActive = false;
                 this.character.bounce();
-                // console.log('is colliding with', enemy);
             } else if (enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar[1].setPercentage(this.character.energy)
