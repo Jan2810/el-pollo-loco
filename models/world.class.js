@@ -10,9 +10,11 @@ class World {
         new Bottlebar(),
         new Energybar(),
         new Coinbar(),
+        new Endbossbar(),
     ];
 
     throwableObject = [];
+    splashObject = [];
     // backgroundMusic = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard) {
@@ -57,14 +59,29 @@ class World {
         setInterval(() => {
             for (let i = 0; i < this.level.enemies.length; i++) {
                 let enemy = this.level.enemies[i];
-                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
+                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken || enemy instanceof Endboss)) {
                     enemy.isKilled = true;
                     enemy.isActive = false;
-                    bottle.playSplashAnimation(enemy.x, enemy.y);
+                    let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+                    this.splashObject.push(splash);
+    
+                    setTimeout(() => {
+                        this.splashObject.splice(0, 1);
+                    }, 300); // Zeit in Millisekunden
+    
+                } else if (bottle.isColliding(enemy) && (enemy instanceof Endboss)) {
+                    enemy.bottleHit();
+                    let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+                    this.splashObject.push(splash);
+    
+                    setTimeout(() => {
+                        this.splashObject.splice(0, 1);
+                    }, 300); // Zeit in Millisekunden
                 }
             }
         }, 10);
     }
+    
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -108,6 +125,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObject);
+        this.addObjectsToMap(this.splashObject);
 
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.statusbar);
