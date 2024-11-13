@@ -21,11 +21,11 @@ const level1 = new Level(
         new Cloud('img/5_background/layers/4_clouds/2.png', 7900),
     ],
     [
-        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 400),
-        new SalsaBottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', 900),
-        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 1500),
-        new SalsaBottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', 2100),
-        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 2700),
+        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 100),
+        new SalsaBottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', 100),
+        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 100),
+        new SalsaBottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', 100),
+        new SalsaBottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 100),
     ],
     [
         new Coin(),

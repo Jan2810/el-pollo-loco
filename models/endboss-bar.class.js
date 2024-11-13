@@ -26,9 +26,9 @@ class Endbossbar extends Statusbar {
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 3;
-        } else if (this.percentage > 80) {
+        } else if (this.percentage >= 60) {
             return 2;
-        } else if (this.percentage > 60) {
+        } else if (this.percentage >= 20) {
             return 1;
         } else {
             return 0;

@@ -56,32 +56,42 @@ class World {
     }
 
     checkBottleCollision(bottle) {
-        setInterval(() => {
+        let interval = setInterval(() => {
             for (let i = 0; i < this.level.enemies.length; i++) {
                 let enemy = this.level.enemies[i];
-                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken || enemy instanceof Endboss)) {
-                    enemy.isKilled = true;
-                    enemy.isActive = false;
-                    let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
-                    this.splashObject.push(splash);
-    
+                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
+                    this.killEnemy(enemy);
                     setTimeout(() => {
                         this.splashObject.splice(0, 1);
-                    }, 300); // Zeit in Millisekunden
-    
-                } else if (bottle.isColliding(enemy) && (enemy instanceof Endboss)) {
-                    enemy.bottleHit();
-                    let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
-                    this.splashObject.push(splash);
-    
+                    }, 300);
+                    bottle.isActive = false;
+                    clearInterval(interval);
+                } else if (bottle.isColliding(enemy) && bottle.isActive && (enemy instanceof Endboss)) {
+                    this.hurtEndboss(enemy, bottle);
                     setTimeout(() => {
                         this.splashObject.splice(0, 1);
-                    }, 300); // Zeit in Millisekunden
+                    }, 300);
+                    clearInterval(interval);
                 }
             }
         }, 10);
     }
-    
+
+    killEnemy(enemy) {
+        enemy.isKilled = true;
+        enemy.isActive = false;
+        let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+        this.splashObject.push(splash);
+    }
+
+    hurtEndboss(enemy, bottle) {
+        enemy.hitByBottle();
+        enemy.isHurt = true;
+        bottle.isActive = false;
+        this.statusbar[3].setPercentage(enemy.energy);
+        let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+        this.splashObject.push(splash);
+    }
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {

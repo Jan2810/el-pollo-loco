@@ -12,6 +12,7 @@ class ThrowableObject extends MovableObject {
     offsetLeft = 30;
     offsetRight = 60;
     keyboard;
+    isActive = true;
 
     constructor(x, y, keyboard) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
