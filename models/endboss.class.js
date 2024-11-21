@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     offsetBottom = 40;
     offsetLeft = 20;
     offsetRight = 20;
+    speedX = 1.5;
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -48,6 +49,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    isWalkingLeft = true;
     isKilled = false;
     isActive = true;
     isHurt = false;
@@ -62,6 +64,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
+        this.movementAnimation();
     }
 
     hitByBottle() {
@@ -78,16 +81,56 @@ class Endboss extends MovableObject {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
             } else if (this.isHurt == true) {
-                    this.playAnimation(this.IMAGES_HURT);
-                    setTimeout(() => {
-                        this.isHurt = false;
-                    }, 600);
-                } else {
-                    this.playAnimation(this.IMAGES_ALERT);
-                }
+                this.playAnimation(this.IMAGES_HURT);
+                setTimeout(() => {
+                    this.isHurt = false;
+                }, 600);
+            } else {
+                this.playAnimation(this.IMAGES_WALK);
             }
-        , 300);
+        }, 300);
     }
+
+    movementAnimation() {
+        const interval = setInterval(() => {
+            if (this.isWalkingLeft) {
+                this.x -= this.speedX;
+            } else {
+                this.x += this.speedX;
+            }
+        }, 1000 / 60);
+    
+        setTimeout(() => {
+            if (this.isWalkingLeft == true) {
+                this.isWalkingLeft = false
+            } else {
+                this.isWalkingLeft = true;
+            }
+            clearInterval(interval);
+            this.attackingAnimation();
+        }, 3000);
+    }
+
+    attackingAnimation() {
+        const interval = setInterval(() => {
+            if (this.isWalkingLeft == false) {
+            this.playAnimation(this.IMAGES_ATTACK);
+            } else if (this.isWalkingLeft == true) {
+                this.playAnimation(this.IMAGES_ALERT);
+            }   
+        }, 300);
+
+        setTimeout(() => {
+            if(this.otherDirection == true) {
+                this.otherDirection = false
+            } else {
+                this.otherDirection = true
+            }
+            clearInterval(interval);
+            this.movementAnimation();
+        }, 2000);
+    }
+    
 
 }
 
