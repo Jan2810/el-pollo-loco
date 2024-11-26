@@ -21,13 +21,13 @@ class Bottlebar extends Statusbar {
 
     increaseAmount() {
         this.amount++;
-        let path = this.IMAGES_BOTTLE[this.amount]; /// muss gefixed werden nach collision
+        let path = this.IMAGES_BOTTLE[this.amount];
         this.img = this.imageCache[path];
     };
 
     reduceAmount() {
         this.amount--;
-        let path = this.IMAGES_BOTTLE[this.amount]; /// muss gefixed werden nach collision
+        let path = this.IMAGES_BOTTLE[this.amount];
         this.img = this.imageCache[path];
     }
 }

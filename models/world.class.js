@@ -13,7 +13,6 @@ class World {
         new Endbossbar(),
     ];
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
-    splashSound = new Audio('audio/hit_bottle.mp3');
     collectBottleSound = new Audio('audio/collect_bottle.mp3');
     collectCoinSound = new Audio('audio/collect_coin.mp3');
 
@@ -63,7 +62,7 @@ class World {
         let interval = setInterval(() => {
             for (let i = 0; i < this.level.enemies.length; i++) {
                 let enemy = this.level.enemies[i];
-                if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
+                if (bottle.isColliding(enemy) && enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
                     this.killEnemy(enemy);
                     this.splashBottle();
                     bottle.isActive = false;
@@ -94,8 +93,6 @@ class World {
     }
 
     splashBottle() {
-        this.splashSound.volume = 0.5;
-        this.splashSound.play();
         setTimeout(() => {
             this.splashObject.splice(0, 1);
         }, 300);
