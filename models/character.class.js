@@ -58,12 +58,15 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png',
     ];
+    dead_sound = new Audio('audio/character_dead.mp3')
+    dead_sound_played = false;
 
     IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
+    hurt_sound = new Audio('audio/character_hurt.mp3');
 
     x = 0;
     y = 150;
@@ -114,6 +117,11 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
+                if (!this.dead_sound_played) {
+                    this.dead_sound.volume = 0.3;
+                    this.dead_sound.play();
+                    this.dead_sound_played = true;
+                }
                 this.playAnimation(this.IMAGES_DEAD);
             } else {
                 if (this.isAboveGround()) {
@@ -121,6 +129,8 @@ class Character extends MovableObject {
                 } else {
                     if (this.isHurt()) {
                         this.playAnimation(this.IMAGES_HURT);
+                        this.hurt_sound.volume = 0.3;
+                        this.hurt_sound.play();
                     }
                     else {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {

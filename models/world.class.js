@@ -12,6 +12,10 @@ class World {
         new Coinbar(),
         new Endbossbar(),
     ];
+    chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
+    splashSound = new Audio('audio/hit_bottle.mp3');
+    collectBottleSound = new Audio('audio/collect_bottle.mp3');
+    collectCoinSound = new Audio('audio/collect_coin.mp3');
 
     throwableObject = [];
     splashObject = [];
@@ -61,16 +65,12 @@ class World {
                 let enemy = this.level.enemies[i];
                 if (bottle.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof BabyChicken)) {
                     this.killEnemy(enemy);
-                    setTimeout(() => {
-                        this.splashObject.splice(0, 1);
-                    }, 300);
+                    this.splashBottle();
                     bottle.isActive = false;
                     clearInterval(interval);
                 } else if (bottle.isColliding(enemy) && bottle.isActive && (enemy instanceof Endboss)) {
                     this.hurtEndboss(enemy, bottle);
-                    setTimeout(() => {
-                        this.splashObject.splice(0, 1);
-                    }, 300);
+                    this.splashBottle();
                     clearInterval(interval);
                 }
             }
@@ -93,11 +93,21 @@ class World {
         this.splashObject.push(splash);
     }
 
+    splashBottle() {
+        this.splashSound.volume = 0.5;
+        this.splashSound.play();
+        setTimeout(() => {
+            this.splashObject.splice(0, 1);
+        }, 300);
+    }
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isActive && this.character.speedY < 0 && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
+                this.chicken_dead_sound.volume = 0.1;
+                this.chicken_dead_sound.play();
                 this.character.bounce();
             } else if (enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -111,6 +121,8 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.salsaBottle.splice(index, 1);
                 this.statusbar[0].increaseAmount();
+                this.collectBottleSound.volume = 0.5;
+                this.collectBottleSound.play();
             }
         });
     }
@@ -120,6 +132,8 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(index, 1);
                 this.statusbar[2].increaseAmount();
+                this.collectCoinSound.volume = 0.2;
+                this.collectCoinSound.play();
             }
         });
     }

@@ -23,19 +23,18 @@ class BabyChicken extends MovableObject {
     
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
-        this.x  = 200 + Math.random() * 4200;    // Spawnlocation of the chickens
-        this.speed = 0.2 + Math.random() * 0.25;    // Speed of the chickens
+        this.x  = 200 + Math.random() * 4200;
+        this.speed = 0.2 + Math.random() * 0.25;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
     }
 
     animate() {
-        // Store intervals in variables
         let moveInterval = setInterval(() => {
             if (!this.isKilled) {
                 this.moveLeft();
             } else {
-                clearInterval(moveInterval); // Stop moving when killed
+                clearInterval(moveInterval);
             }
         }, 1000 / 60);
 
@@ -43,14 +42,14 @@ class BabyChicken extends MovableObject {
             if (!this.isKilled) {
                 this.playAnimation(this.IMAGES_WALKING);
             } else {
-                clearInterval(walkingAnimationInterval); // Stop walking animation when killed
+                clearInterval(walkingAnimationInterval);
             }
         }, 200);
 
         let deathCheckInterval = setInterval(() => {
             if (this.isKilled) {
                 this.loadImage(this.IMAGES_DEAD);
-                clearInterval(deathCheckInterval); // Stop checking once the image is loaded
+                clearInterval(deathCheckInterval);
             }
         }, 200);
     }
