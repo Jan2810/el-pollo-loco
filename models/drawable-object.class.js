@@ -6,6 +6,8 @@ class DrawableObject {
     width;
     imageCache = {};
     currentImage = 0;
+    intervalIDs = [];
+
 
     loadImage(path) {
         this.img = new Image();
@@ -42,6 +44,11 @@ class DrawableObject {
             ctx.rect(this.x + this.offsetLeft, this.y + this.offsetTop, this.width - this.offsetLeft - this.offsetRight, this.height - this.offsetTop -this.offsetBottom);
             ctx.stroke();
         };
+    }
+
+    stopGame() {
+        this.intervalIDs.forEach(id => clearInterval(id));
+        alert('Game Over!');
     }
 
 }

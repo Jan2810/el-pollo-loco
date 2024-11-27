@@ -68,7 +68,6 @@ class Endboss extends MovableObject {
     }
 
     hitByBottle() {
-        console.log('Test');
         this.energy -= 40;
         if (this.energy <= 0) {
             this.energy = 0;
@@ -77,9 +76,10 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
+                this.stopGame();
             } else if (this.isHurt == true) {
                 this.playAnimation(this.IMAGES_HURT);
                 setTimeout(() => {
@@ -89,10 +89,11 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_WALK);
             }
         }, 300);
+        this.intervalIDs.push(animationInterval);
     }
 
     movementAnimation() {
-        const interval = setInterval(() => {
+        let movementInterval = setInterval(() => {
             if (this.isWalkingLeft) {
                 this.x -= this.speedX;
             } else {
@@ -106,13 +107,14 @@ class Endboss extends MovableObject {
             } else {
                 this.isWalkingLeft = true;
             }
-            clearInterval(interval);
+            clearInterval(movementInterval);
             this.attackingAnimation();
         }, 3000);
+        this.intervalIDs.push(movementInterval);
     }
 
     attackingAnimation() {
-        const interval = setInterval(() => {
+        let attackInterval = setInterval(() => {
             if (this.isWalkingLeft == false) {
             this.playAnimation(this.IMAGES_ATTACK);
             } else if (this.isWalkingLeft == true) {
@@ -126,9 +128,10 @@ class Endboss extends MovableObject {
             } else {
                 this.otherDirection = true
             }
-            clearInterval(interval);
+            clearInterval(attackInterval);
             this.movementAnimation();
         }, 2000);
+        this.intervalIDs.push(attackInterval);
     }
     
 

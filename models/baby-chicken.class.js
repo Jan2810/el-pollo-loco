@@ -1,6 +1,6 @@
 class BabyChicken extends MovableObject {
 
-    y = 345;
+    y = 335;
     height = 80;
     width = 70;
     speedX = 0.15;
@@ -37,6 +37,8 @@ class BabyChicken extends MovableObject {
                 clearInterval(moveInterval);
             }
         }, 1000 / 60);
+        this.intervalIDs.push(moveInterval);
+        
 
         let walkingAnimationInterval = setInterval(() => {
             if (!this.isKilled) {
@@ -45,6 +47,7 @@ class BabyChicken extends MovableObject {
                 clearInterval(walkingAnimationInterval);
             }
         }, 200);
+        this.intervalIDs.push(walkingAnimationInterval);
 
         let deathCheckInterval = setInterval(() => {
             if (this.isKilled) {
@@ -52,6 +55,7 @@ class BabyChicken extends MovableObject {
                 clearInterval(deathCheckInterval);
             }
         }, 200);
+        this.intervalIDs.push(deathCheckInterval);        
     }
 
 }

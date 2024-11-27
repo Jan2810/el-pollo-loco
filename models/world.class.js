@@ -100,7 +100,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isActive && this.character.speedY < 0 && this.character.isColliding(enemy)) {
+            if (enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken) && this.character.speedY < 0 && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
                 this.chicken_dead_sound.volume = 0.1;

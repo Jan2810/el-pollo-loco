@@ -24,15 +24,16 @@ class SalsaSplash extends MovableObject {
 
     playSplashAnimation() {
         let currentImage = 0;
-        let interval = setInterval(() => {
+        let animationInterval = setInterval(() => {
             this.splashSound.volume = 0.5;
             this.splashSound.play();
             if (currentImage < this.IMAGES_SPLASH.length) {
                 this.loadImage(this.IMAGES_SPLASH[currentImage]);
                 currentImage++;
             } else {
-                clearInterval(interval);
+                clearInterval(animationInterval);
             }
         }, 50);
+        // this.intervalIds.push(animationInterval);
     }
 }
