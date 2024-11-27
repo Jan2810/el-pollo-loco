@@ -94,13 +94,15 @@ class Endboss extends MovableObject {
 
     movementAnimation() {
         let movementInterval = setInterval(() => {
-            if (this.isWalkingLeft) {
-                this.x -= this.speedX;
-            } else {
-                this.x += this.speedX;
+            if (!this.isDead()) {
+                if (this.isWalkingLeft) {
+                    this.x -= this.speedX;
+                } else {
+                    this.x += this.speedX;
+                }
             }
-        }, 1000 / 60);
-    
+        }, 1000 / 60)
+
         setTimeout(() => {
             if (this.isWalkingLeft == true) {
                 this.isWalkingLeft = false
@@ -116,14 +118,14 @@ class Endboss extends MovableObject {
     attackingAnimation() {
         let attackInterval = setInterval(() => {
             if (this.isWalkingLeft == false) {
-            this.playAnimation(this.IMAGES_ATTACK);
+                this.playAnimation(this.IMAGES_ATTACK);
             } else if (this.isWalkingLeft == true) {
                 this.playAnimation(this.IMAGES_ALERT);
-            }   
+            }
         }, 300);
 
         setTimeout(() => {
-            if(this.otherDirection == true) {
+            if (this.otherDirection == true) {
                 this.otherDirection = false
             } else {
                 this.otherDirection = true
@@ -133,7 +135,7 @@ class Endboss extends MovableObject {
         }, 2000);
         this.intervalIDs.push(attackInterval);
     }
-    
+
 
 }
 

@@ -47,8 +47,10 @@ class DrawableObject {
     }
 
     stopGame() {
-        this.intervalIDs.forEach(id => clearInterval(id));
+        setTimeout(() => {
+            this.intervalIDs.forEach(id => clearInterval(id));
         alert('Game Over!');
+        }, 1000);
     }
 
 }
