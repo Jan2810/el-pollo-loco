@@ -34,13 +34,14 @@
     <title>El Pollo Loco</title>
 </head>
 
-<body onload="init()">
-    <div id="startOverlay" class="start-overlay" onclick="closeOverlay()">
+<body>
+    <div id="startOverlay" class="start-overlay" onclick="init(); closeOverlay()">
         <h2 class="overlay-text">click to start</h2>
     </div>
 
     <h1>El Pollo Loco</h1>
     <canvas id="canvas" width="720" height="480"></canvas>
+
     <div class="description">
         <div class="description-item">
             <img src="./img/10_menu/arrow_left_icon.png" alt="left">
@@ -56,6 +57,13 @@
             <h3>= throw Tabasco</h3>
         </div>
     </div>
+
+    <!-- <div id="gameOverOverlay" class="game-over-overlay">
+        <div class="game-over-menu">
+
+        </div>
+    </div> -->
+
 </body>
 
 </html>

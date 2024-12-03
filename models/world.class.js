@@ -18,7 +18,9 @@ class World {
 
     throwableObject = [];
     splashObject = [];
-    // backgroundMusic = new Audio('audio/music.mp3');
+    backgroundMusic = new Audio('audio/music.mp3');
+    backgroundMusicEndboss = new Audio('audio/music_endboss.mp3');
+    endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -27,14 +29,22 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        // this.playBackgroundMusic();
+        this.playBackgroundMusic();
     }
 
-    // playBackgroundMusic() {
-    //     this.backgroundMusic.volume = 0.3;
-    //     this.backgroundMusic.play();
-    //     this.backgroundMusic.loop = true;
-    // }
+    playBackgroundMusic() {
+        setInterval(() => {
+            if (this.character.x > 3300) {
+                this.backgroundMusic.pause();
+                this.backgroundMusicEndboss.volume = 0.3;
+                this.backgroundMusicEndboss.play();
+                this.backgroundMusicEndboss.loop = true;
+            }
+        }, 200);
+        this.backgroundMusic.volume = 0.3;
+        this.backgroundMusic.play();
+        this.backgroundMusic.loop = true;
+    }
 
     setWorld() {
         this.character.world = this;

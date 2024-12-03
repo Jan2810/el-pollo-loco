@@ -31,6 +31,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G22.png',
         'img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
+    hurt_sound = new Audio('audio/endboss_hurt.mp3');
 
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
@@ -48,6 +49,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
+    dead_sound = new Audio('audio/endboss_dead.mp3');
 
     isWalkingLeft = true;
     isKilled = false;
@@ -79,9 +81,11 @@ class Endboss extends MovableObject {
         let animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
-                this.stopGame();
+                this.dead_sound.play();
+                this.stopWin();
             } else if (this.isHurt == true) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.hurt_sound.play();
                 setTimeout(() => {
                     this.isHurt = false;
                 }, 600);

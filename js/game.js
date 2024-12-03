@@ -1,6 +1,7 @@
 let canvas;
 let world;
 keyboard = new Keyboard();
+let keyIsDown = false;
 
 
 function init() {
@@ -35,7 +36,8 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode == 83) {
         keyboard.S = true;
     }
-    if (event.keyCode == 68) {
+    if (event.keyCode == 68 && !keyIsDown) {
+        keyIsDown = true;
         keyboard.D = true;
     }
 });
@@ -64,6 +66,7 @@ window.addEventListener('keyup', (event) => {
         keyboard.S = false;
     }
     if (event.keyCode == 68) {
+        keyIsDown = false;
         keyboard.D = false;
     }
 });
