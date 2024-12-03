@@ -8,6 +8,10 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
+function closeOverlay() {
+    document.getElementById("startOverlay").style.display = "none";
+}
+
 window.addEventListener('keydown', (event) => {
 
     if (event.keyCode == 37) {
