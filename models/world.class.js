@@ -29,22 +29,22 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.playBackgroundMusic();
+        // this.playBackgroundMusic();
     }
 
-    playBackgroundMusic() {
-        setInterval(() => {
-            if (this.character.x > 3300) {
-                this.backgroundMusic.pause();
-                this.backgroundMusicEndboss.volume = 0.3;
-                this.backgroundMusicEndboss.play();
-                this.backgroundMusicEndboss.loop = true;
-            }
-        }, 200);
-        this.backgroundMusic.volume = 0.3;
-        this.backgroundMusic.play();
-        this.backgroundMusic.loop = true;
-    }
+    // playBackgroundMusic() {
+    //     setInterval(() => {
+    //         if (this.character.x > 3300) {
+    //             this.backgroundMusic.pause();
+    //             this.backgroundMusicEndboss.volume = 0.3;
+    //             this.backgroundMusicEndboss.play();
+    //             this.backgroundMusicEndboss.loop = true;
+    //         }
+    //     }, 200);
+    //     this.backgroundMusic.volume = 0.3;
+    //     this.backgroundMusic.play();
+    //     this.backgroundMusic.loop = true;
+    // }
 
     setWorld() {
         this.character.world = this;
@@ -60,7 +60,7 @@ class World {
     }
 
     throwObjects() {
-        if (this.keyboard.D && this.statusbar[0].amount > 0) {
+        if (this.keyboard.D && !this.keyboard.keyIsDown && this.statusbar[0].amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();

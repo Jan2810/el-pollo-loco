@@ -37,8 +37,9 @@ window.addEventListener('keydown', (event) => {
         keyboard.S = true;
     }
     if (event.keyCode == 68 && !keyIsDown) {
-        keyIsDown = true;
         keyboard.D = true;
+        keyIsDown = true;
+        console.log(keyIsDown);
     }
 });
 
@@ -66,7 +67,8 @@ window.addEventListener('keyup', (event) => {
         keyboard.S = false;
     }
     if (event.keyCode == 68) {
-        keyIsDown = false;
         keyboard.D = false;
+        keyIsDown = false;
+        console.log(keyIsDown);
     }
 });
