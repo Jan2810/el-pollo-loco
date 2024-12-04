@@ -48,6 +48,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
+    snoring_sound = new Audio('audio/character_snoring.mp3');
 
     IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
@@ -58,7 +59,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png',
     ];
-    dead_sound = new Audio('audio/character_dead.mp3')
+    dead_sound = new Audio('audio/character_dead.mp3');
     dead_sound_played = false;
 
     IMAGES_HURT = [
@@ -150,6 +151,8 @@ class Character extends MovableObject {
                             this.playAnimation(this.IMAGES_WALKING);
                         } else if (Date.now() - lastInteraction > 5000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
+                            this.snoring_sound.volume = 1;
+                            this.snoring_sound.play()
                         } else {
                             this.playAnimation(this.IMAGES_IDLE);
                         }

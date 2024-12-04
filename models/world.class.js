@@ -12,14 +12,15 @@ class World {
         new Coinbar(),
         new Endbossbar(),
     ];
-    chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
-    collectBottleSound = new Audio('audio/collect_bottle.mp3');
-    collectCoinSound = new Audio('audio/collect_coin.mp3');
-
     throwableObject = [];
     splashObject = [];
-    backgroundMusic = new Audio('audio/music.mp3');
-    backgroundMusicEndboss = new Audio('audio/music_endboss.mp3');
+
+    chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
+    collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
+    collect_coin_sound = new Audio('audio/collect_coin.mp3');
+    error_sound = new Audio('audio/error.mp3');
+    background_music = new Audio('audio/music.mp3');
+    background_music_endboss = new Audio('audio/music_endboss.mp3');
     endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
 
     constructor(canvas, keyboard) {
@@ -32,19 +33,19 @@ class World {
         // this.playBackgroundMusic();
     }
 
-    // playBackgroundMusic() {
-    //     setInterval(() => {
-    //         if (this.character.x > 3300) {
-    //             this.backgroundMusic.pause();
-    //             this.backgroundMusicEndboss.volume = 0.3;
-    //             this.backgroundMusicEndboss.play();
-    //             this.backgroundMusicEndboss.loop = true;
-    //         }
-    //     }, 200);
-    //     this.backgroundMusic.volume = 0.3;
-    //     this.backgroundMusic.play();
-    //     this.backgroundMusic.loop = true;
-    // }
+    playBackgroundMusic() {
+        setInterval(() => {
+            if (this.character.x > 3300) {
+                this.background_music.pause();
+                this.background_music_endboss.volume = 0.3;
+                this.background_music_endboss.play();
+                this.background_music_endboss.loop = true;
+            }
+        }, 200);
+        this.background_music.volume = 0.3;
+        this.background_music.play();
+        this.background_music.loop = true;
+    }
 
     setWorld() {
         this.character.world = this;
@@ -65,7 +66,10 @@ class World {
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();
             this.checkBottleCollision(bottle);
-        }      // else play error sound
+        } else if (this.keyboard.D && !this.statusbar[0].amount){
+            this.error_sound.volume = 0.6;
+            this.error_sound.play();
+        }
     }
 
     checkBottleCollision(bottle) {
@@ -128,8 +132,8 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.salsaBottle.splice(index, 1);
                 this.statusbar[0].increaseAmount();
-                this.collectBottleSound.volume = 0.5;
-                this.collectBottleSound.play();
+                this.collect_bottle_sound.volume = 0.5;
+                this.collect_bottle_sound.play();
             }
         });
     }
@@ -139,8 +143,8 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(index, 1);
                 this.statusbar[2].increaseAmount();
-                this.collectCoinSound.volume = 0.2;
-                this.collectCoinSound.play();
+                this.collect_coin_sound.volume = 0.2;
+                this.collect_coin_sound.play();
             }
         });
     }
@@ -183,8 +187,8 @@ class World {
             this.flipImage(object);
         }
         object.draw(this.ctx);
-        object.drawFrame(this.ctx);
-        object.drawCollisionFrame(this.ctx);
+        // object.drawFrame(this.ctx);
+        // object.drawCollisionFrame(this.ctx);
 
         if (object.otherDirection) {
             this.flipImageBack(object);
