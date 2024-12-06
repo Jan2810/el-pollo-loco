@@ -48,7 +48,7 @@ class DrawableObject {
 
     stopLost() {
         setTimeout(() => {
-            this.intervalIDs.forEach(id => clearInterval(id));
+            this.clearAllIntervals();
             document.getElementById("fullscreen").classList.add("d-none");
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("description").classList.add("d-none");
@@ -58,7 +58,7 @@ class DrawableObject {
 
     stopWin() {
         setTimeout(() => {
-            this.intervalIDs.forEach(id => clearInterval(id));
+            this.clearAllIntervals();
             document.getElementById("fullscreen").classList.add("d-none");
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("description").classList.add("d-none");
@@ -69,5 +69,7 @@ class DrawableObject {
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
       }
+
+    //   this.intervalIDs.forEach(id => clearInterval(id));
 
 }

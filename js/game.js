@@ -4,8 +4,9 @@ keyboard = new Keyboard();
 let keyIsDown = false;
 background_music = new Audio('audio/music.mp3');
 
-function init() {
+async function init() {
     canvas = document.getElementById("canvas");
+    await initLevel();
     world = new World(canvas, keyboard, background_music);
     document.getElementById("menu").classList.add("d-none");
     document.getElementById("fullscreen").classList.remove("d-none");
@@ -15,9 +16,9 @@ function init() {
 
 function closeOverlay(overlay) {
     document.getElementById(overlay).style.display = "none";
-    // background_music.volume = 0.3;
-    // background_music.play();
-    // background_music.loop = true;
+    background_music.volume = 0.3;
+    background_music.play();
+    background_music.loop = true;
 }
 
 window.addEventListener('keydown', (event) => {
