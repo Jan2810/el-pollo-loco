@@ -49,15 +49,25 @@ class DrawableObject {
     stopLost() {
         setTimeout(() => {
             this.intervalIDs.forEach(id => clearInterval(id));
-        alert('Loosing Game Over!');
+            document.getElementById("fullscreen").classList.add("d-none");
+            document.getElementById("canvas").classList.add("d-none");
+            document.getElementById("description").classList.add("d-none");
+            document.getElementById("gameLostOverlay").classList.remove("d-none");
         }, 1000);
     }
 
     stopWin() {
         setTimeout(() => {
             this.intervalIDs.forEach(id => clearInterval(id));
-        alert('Winning! Game Over!');
+            document.getElementById("fullscreen").classList.add("d-none");
+            document.getElementById("canvas").classList.add("d-none");
+            document.getElementById("description").classList.add("d-none");
+            document.getElementById("gameWonOverlay").classList.remove("d-none");
         }, 2000);
     }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+      }
 
 }

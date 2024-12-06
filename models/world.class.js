@@ -15,18 +15,22 @@ class World {
     throwableObject = [];
     splashObject = [];
 
+    audio_data = [];
+
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
     collect_coin_sound = new Audio('audio/collect_coin.mp3');
     error_sound = new Audio('audio/error.mp3');
-    background_music = new Audio('audio/music.mp3');
+    background_music;
     background_music_endboss = new Audio('audio/music_endboss.mp3');
     endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, background_music) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.background_music = background_music;
+        this.audio_data.push(background_music);
         this.draw();
         this.setWorld();
         this.run();
@@ -40,11 +44,10 @@ class World {
                 this.background_music_endboss.volume = 0.3;
                 this.background_music_endboss.play();
                 this.background_music_endboss.loop = true;
+                this.audio_data.push(background_music_endboss);
+        this.draw();
             }
         }, 200);
-        this.background_music.volume = 0.3;
-        this.background_music.play();
-        this.background_music.loop = true;
     }
 
     setWorld() {

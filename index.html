@@ -29,13 +29,13 @@
     <script src="models/level.class.js"></script>
     <script src="levels/level1.js"></script>
 
-    <script src="js/game.js"></script>
+    <script src="js/game.js" defer></script>
 
     <title>El Pollo Loco</title>
 </head>
 
 <body>
-    <div id="startOverlay" class="start-overlay" onclick="closeOverlay()">
+    <div id="startOverlay" class="start-overlay" onclick="closeOverlay('startOverlay')">
         <h2 class="overlay-text">click to start</h2>
     </div>
 
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div id="fullscreen">
+    <div id="fullscreen" class="d-none">
         <canvas id="canvas" width="720" height="480"></canvas>
     </div>
 
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div class="description">
+    <div id="description" class="description d-none">
         <div class="description-item">
             <img src="./img/10_menu/arrow_left_icon.png" alt="left">
             <img src="./img/10_menu/arrow_right_icon.png" alt="left">
@@ -83,11 +83,21 @@
         </div>
     </div>
 
-    <!-- <div id="gameOverOverlay" class="game-over-overlay">
-        <div class="game-over-menu">
+    <div id="gameLostOverlay" class="game-lost-overlay d-none">
+            <img src="./img/9_intro_outro_screens/game_over/game over.png" alt="">
+            <div class="game-end-buttons">
+                <button id="restartGameBtn" class="menu-button" onclick="init(); closeOverlay('gameLostOverlay')">Restart</button>
+                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu()">Go to Menu</button>
+            </div>
+    </div>
 
-        </div>
-    </div> -->
+    <div id="gameWonOverlay" class="game-won-overlay d-none">
+            <img src="./img/9_intro_outro_screens/win/won_1.png">
+            <div class="game-end-buttons">
+                <button id="restartGameBtn" class="menu-button" onclick="init(); closeOverlay('gameLostOverlay')">Restart</button>
+                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu()">Go to Menu</button>
+            </div>
+    </div>
 
 </body>
 
