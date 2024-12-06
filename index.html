@@ -35,12 +35,37 @@
 </head>
 
 <body>
-    <div id="startOverlay" class="start-overlay" onclick="init(); closeOverlay()">
+    <div id="startOverlay" class="start-overlay" onclick="closeOverlay()">
         <h2 class="overlay-text">click to start</h2>
     </div>
 
-    <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
+    <div id="menu" class="menu">
+        <h1>MENU</h1>
+        <div class="buttons-section">
+            <button id="startGameBtn" class="menu-button" onclick="init()">Start Game</button>
+            <button id="introductionsBtn" class="menu-button">Introduction</button>
+            <button id="imprintBtn" class="menu-button">Imprint</button>
+        </div>
+    </div>
+
+    <div id="fullscreen">
+        <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+
+    <div id="responsiveBtnPanel" class="responsive-buttons d-none">
+        <div>
+            <img src="./img/11_ingame/arrow_left.png" id="leftBtn" class="responsiveBtn">
+            <img src="./img/11_ingame/arrow_right.png" id="rightBtn" class="responsiveBtn">
+        </div>
+        <div>
+            <img src="./img/11_ingame/mute_sound.png" id="soundBtn" class="responsiveBtn">
+            <img src="./img/11_ingame/enter_fullscreen.png" id="fullscreenBtn" class="responsiveBtn">
+        </div>
+        <div>
+            <img src="./img/11_ingame/arrow_up.png" id="jumpBtn" class="responsiveBtn">
+            <img src="./img/11_ingame/bottle.png" id="bottleBtn" class="responsiveBtn">
+        </div>
+    </div>
 
     <div class="description">
         <div class="description-item">

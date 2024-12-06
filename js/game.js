@@ -7,6 +7,7 @@ let keyIsDown = false;
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
+    document.getElementById("menu").classList.add("d-none")
 }
 
 function closeOverlay() {
@@ -71,4 +72,16 @@ window.addEventListener('keyup', (event) => {
         keyIsDown = false;
         console.log(keyIsDown);
     }
+});
+
+document.getElementById('leftBtn').addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    keyboard.LEFT = true;
+    console.log('Pressed:', keyboard.LEFT);
+});
+
+document.getElementById('leftBtn').addEventListener('touchend', (event) => {
+    event.preventDefault();
+    keyboard.LEFT = false;
+    console.log('Released:', keyboard.LEFT);
 });
