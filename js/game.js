@@ -15,7 +15,7 @@ async function init() {
 }
 
 function closeOverlay(overlay) {
-    document.getElementById(overlay).style.display = "none";
+    document.getElementById(overlay).classList.add("d-none");
     // background_music.volume = 0.3;
     // background_music.play();
     // background_music.loop = true;
@@ -47,7 +47,6 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode == 68 && !keyIsDown) {
         keyboard.D = true;
         keyIsDown = true;
-        console.log(keyIsDown);
     }
 });
 
@@ -86,46 +85,37 @@ setInterval(() => {
     document.getElementById('leftBtn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.LEFT = true;
-        console.log('Pressed:', keyboard.LEFT);
     });
     document.getElementById('rightBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.LEFT = false;
-        console.log('Released:', keyboard.LEFT);
     });
 
     document.getElementById('rightBtn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.RIGHT = true;
-        console.log('Pressed:', keyboard.RIGHT);
     });
     document.getElementById('rightBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.RIGHT = false;
-        console.log('Released:', keyboard.RIGHT);
     });
 
     document.getElementById('jumpBtn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.SPACE = true;
-        console.log('Pressed:', keyboard.SPACE);
     });
     document.getElementById('jumpBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.SPACE = false;
-        console.log('Released:', keyboard.SPACE);
     });
 
     document.getElementById('bottleBtn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.D = true;
-        console.log('Pressed:', keyboard.D);
     });
     document.getElementById('bottleBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.D = false;
-        console.log('Released:', keyboard.D);
     });
 
-    
 }, 50);
