@@ -2,12 +2,20 @@ let canvas;
 let world;
 keyboard = new Keyboard();
 let keyIsDown = false;
-background_music = new Audio('audio/music.mp3');
 
 async function init() {
+    clearAllIntervals();
     canvas = document.getElementById("canvas");
     await initLevel();
-    world = new World(canvas, keyboard, background_music);
+    world = new World(canvas, keyboard);
+    closeStartScreen();
+}
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
+function closeStartScreen() {
     document.getElementById("menu").classList.add("d-none");
     document.getElementById("fullscreen").classList.remove("d-none");
     document.getElementById("canvas").classList.remove("d-none");
@@ -16,9 +24,11 @@ async function init() {
 
 function closeOverlay(overlay) {
     document.getElementById(overlay).classList.add("d-none");
-    // background_music.volume = 0.3;
-    // background_music.play();
-    // background_music.loop = true;
+}
+
+function goToMenu(overlay) {
+    document.getElementById(overlay).classList.add("d-none");
+    document.getElementById("menu").classList.remove("d-none");
 }
 
 window.addEventListener('keydown', (event) => {
@@ -117,5 +127,4 @@ setInterval(() => {
         event.preventDefault();
         keyboard.D = false;
     });
-
 }, 50);

@@ -152,7 +152,7 @@ class Character extends MovableObject {
                         } else if (Date.now() - lastInteraction > 10000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
                             this.snoring_sound.volume = 1;
-                            this.snoring_sound.play()
+                            this.snoring_sound.play();
                         } else {
                             this.playAnimation(this.IMAGES_IDLE);
                         }

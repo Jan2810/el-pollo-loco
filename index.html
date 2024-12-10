@@ -43,7 +43,6 @@
         <h1>MENU</h1>
         <div class="buttons-section">
             <button id="startGameBtn" class="menu-button" onclick="init()">Start Game</button>
-            <button id="introductionsBtn" class="menu-button">Introduction</button>
             <button id="imprintBtn" class="menu-button">Imprint</button>
         </div>
     </div>
@@ -87,7 +86,7 @@
             <img src="./img/9_intro_outro_screens/game_over/game over.png" alt="">
             <div class="game-end-buttons">
                 <button id="restartGameBtn" class="menu-button" onclick="init(); closeOverlay('gameLostOverlay')">Restart</button>
-                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu()">Go to Menu</button>
+                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu('gameLostOverlay')">Go to Menu</button>
             </div>
     </div>
 
@@ -95,7 +94,7 @@
             <img src="./img/9_intro_outro_screens/win/won_1.png">
             <div class="game-end-buttons">
                 <button id="restartGameBtn" class="menu-button" onclick="init(); closeOverlay('gameWonOverlay')">Restart</button>
-                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu()">Go to Menu</button>
+                <button id="goToMenuBtn" class="menu-button" onclick="goToMenu('gameWonOverlay')">Go to Menu</button>
             </div>
     </div>
 
