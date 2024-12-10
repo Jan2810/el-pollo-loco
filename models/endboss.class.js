@@ -57,7 +57,9 @@ class Endboss extends MovableObject {
     isHurt = false;
     energy = 100;
 
-    constructor() {
+    world;
+
+    constructor(world) {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.x = 4000;
         this.loadImages(this.IMAGES_ALERT);
@@ -67,6 +69,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
         this.movementAnimation();
+        this.world = world;
     }
 
     hitByBottle() {
@@ -81,11 +84,15 @@ class Endboss extends MovableObject {
         let animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
-                this.dead_sound.play();
+                if (this.world.gameIsMuted) {
+                    this.dead_sound.play();
+                }
                 this.stopWin();
             } else if (this.isHurt == true) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.hurt_sound.play();
+                if (this.world.gameIsMuted) {
+                    this.hurt_sound.play();
+                }
                 setTimeout(() => {
                     this.isHurt = false;
                 }, 600);

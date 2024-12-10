@@ -1,4 +1,5 @@
 class World {
+    gameIsMuted = true;
 
     character = new Character();
     level = level1;
@@ -14,8 +15,6 @@ class World {
     ];
     throwableObject = [];
     splashObject = [];
-
-    gameIsMuted = false;
 
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
@@ -34,6 +33,15 @@ class World {
         this.run();
         this.playBackgroundMusic();
     }
+
+    toggleMute() {
+        if (this.gameIsMuted) {
+            this.gameIsMuted = false
+        } else if (!this.gameIsMuted) {
+            this.gameIsMuted = true;
+        }
+    }
+
 
     playBackgroundMusic() {
         setInterval(() => {
@@ -69,7 +77,7 @@ class World {
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();
             this.checkBottleCollision(bottle);
-        } else if (this.keyboard.D && !this.statusbar[0].amount && !this.gameIsMuted){
+        } else if (this.keyboard.D && !this.statusbar[0].amount && !this.gameIsMuted) {
             this.error_sound.volume = 0.6;
             this.error_sound.play();
         }
@@ -105,7 +113,7 @@ class World {
         enemy.isHurt = true;
         bottle.isActive = false;
         this.statusbar[3].setPercentage(enemy.energy);
-        let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+        let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, this);
         this.splashObject.push(splash);
     }
 
@@ -120,8 +128,10 @@ class World {
             if (enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken) && this.character.speedY < 0 && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
-                this.chicken_dead_sound.volume = 0.1;
-                this.chicken_dead_sound.play();
+                if (!this.gameIsMuted) {
+                    this.chicken_dead_sound.volume = 0.1;
+                    this.chicken_dead_sound.play();
+                }
                 this.character.bounce();
             } else if (enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -135,8 +145,10 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.salsaBottle.splice(index, 1);
                 this.statusbar[0].increaseAmount();
-                this.collect_bottle_sound.volume = 0.5;
-                this.collect_bottle_sound.play();
+                if (!this.gameIsMuted) {
+                    this.collect_bottle_sound.volume = 0.5;
+                    this.collect_bottle_sound.play();
+                }
             }
         });
     }
@@ -146,8 +158,10 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(index, 1);
                 this.statusbar[2].increaseAmount();
-                this.collect_coin_sound.volume = 0.2;
-                this.collect_coin_sound.play();
+                if (!this.gameIsMuted) {
+                    this.collect_coin_sound.volume = 0.2;
+                    this.collect_coin_sound.play();
+                }
             }
         });
     }

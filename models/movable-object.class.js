@@ -61,12 +61,6 @@ class MovableObject extends DrawableObject {
         this.x -= this.speedX;
     }
 
-    jump() {
-        this.speedY = 25;
-        this.jumping_sound.playbackRate = 0.7;
-        this.jumping_sound.play();
-    }
-
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];

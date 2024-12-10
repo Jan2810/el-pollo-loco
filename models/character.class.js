@@ -80,7 +80,6 @@ class Character extends MovableObject {
     offsetLeft = 30;
     offsetRight = 40;
 
-
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -104,7 +103,7 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 this.walking_sound.playbackRate = 2;
-                if (this.y === 150) {
+                if (this.y === 150 && this.world.gameisMuted) {
                     this.walking_sound.play();
                 }
                 interaction = true;
@@ -112,7 +111,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.LEFT && this.x > 20) {
                 this.moveLeft();
                 this.otherDirection = true;
-                if (this.y === 150) {
+                if (this.y === 150 && this.world.gameisMuted) {
                     this.walking_sound.play();
                 }
                 interaction = true;
@@ -131,7 +130,7 @@ class Character extends MovableObject {
 
         let animationsInterval = setInterval(() => {
             if (this.isDead()) {
-                if (!this.dead_sound_played) {
+                if (!this.dead_sound_played && this.world.gameisMuted) {
                     this.dead_sound.volume = 0.3;
                     this.dead_sound.play();
                     this.dead_sound_played = true;
@@ -144,15 +143,19 @@ class Character extends MovableObject {
                 } else {
                     if (this.isHurt()) {
                         this.playAnimation(this.IMAGES_HURT);
-                        this.hurt_sound.volume = 0.3;
-                        this.hurt_sound.play();
+                        if (this.world.gameisMuted) {
+                            this.hurt_sound.volume = 0.3;
+                            this.hurt_sound.play();
+                        }
                     } else {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {
                             this.playAnimation(this.IMAGES_WALKING);
                         } else if (Date.now() - lastInteraction > 10000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
-                            this.snoring_sound.volume = 1;
-                            this.snoring_sound.play();
+                            if (this.world.gameisMuted) {
+                                this.snoring_sound.volume = 1;
+                                this.snoring_sound.play();
+                            }
                         } else {
                             this.playAnimation(this.IMAGES_IDLE);
                         }
@@ -161,6 +164,14 @@ class Character extends MovableObject {
             }
         }, 200);
         this.intervalIDs.push(animationsInterval);
+    }
+
+    jump() {
+        this.speedY = 25;
+        if (this.world.gameisMuted) {
+            this.jumping_sound.playbackRate = 0.7;
+            this.jumping_sound.play();
+        }
     }
 
     bounce() {

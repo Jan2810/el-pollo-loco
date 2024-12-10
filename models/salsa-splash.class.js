@@ -14,9 +14,11 @@ class SalsaSplash extends MovableObject {
     width = 50;
     x;
     y;
+    world;
 
-    constructor(x, y) {
+    constructor(x, y, world) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png');
+        this.world = world;
         this.x = x;
         this.y = y;
         this.playSplashAnimation();

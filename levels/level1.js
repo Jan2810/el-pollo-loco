@@ -8,7 +8,7 @@ async function initLevel() {
             new BabyChicken(),
             new BabyChicken(),
             new BabyChicken(),
-            new Endboss(),
+            new Endboss(this),
         ],
         [
             new Cloud('img/5_background/layers/4_clouds/1.png', 0),
