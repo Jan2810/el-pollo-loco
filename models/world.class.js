@@ -15,7 +15,7 @@ class World {
     throwableObject = [];
     splashObject = [];
 
-    audio_data = [];
+    gameIsMuted = false;
 
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
@@ -37,12 +37,12 @@ class World {
 
     playBackgroundMusic() {
         setInterval(() => {
-            if (this.character.x > 3300) {
+            if (this.character.x > 3300 && !this.gameIsMuted) {
                 this.background_music.pause();
                 this.background_music_endboss.volume = 0.3;
                 this.background_music_endboss.play();
                 this.background_music_endboss.loop = true;
-            } else {
+            } else if (!this.gameIsMuted) {
                 this.background_music.volume = 0.3;
                 this.background_music.play();
                 this.background_music.loop = true;
@@ -69,7 +69,7 @@ class World {
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();
             this.checkBottleCollision(bottle);
-        } else if (this.keyboard.D && !this.statusbar[0].amount){
+        } else if (this.keyboard.D && !this.statusbar[0].amount && !this.gameIsMuted){
             this.error_sound.volume = 0.6;
             this.error_sound.play();
         }

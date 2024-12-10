@@ -114,7 +114,7 @@ body {
 
 canvas {
     background-color: black;
-    display: flex;
+    display: block;
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     margin-bottom: 20px;
@@ -122,20 +122,22 @@ canvas {
 
 .responsive-buttons {
     display: flex;
-    height: 100vh;
-    max-height: 480px;
-    width: 100%;
+    height: 55px;
+    max-height: 400px;
+    width: 90%;
     max-width: 720px;
+    top: 80%;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     position: absolute;
 }
 
 .responsive-buttons img {
     height: fit-content;
     max-height: 50px;
-    margin: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .game-lost-overlay {

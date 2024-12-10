@@ -96,7 +96,7 @@ setInterval(() => {
         event.preventDefault();
         keyboard.LEFT = true;
     });
-    document.getElementById('rightBtn').addEventListener('touchend', (event) => {
+    document.getElementById('leftBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.LEFT = false;
     });
