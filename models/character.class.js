@@ -103,7 +103,7 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 this.walking_sound.playbackRate = 2;
-                if (this.y === 150 && this.world.gameisMuted) {
+                if (this.y === 150 && !this.world.gameIsMuted) {
                     this.walking_sound.play();
                 }
                 interaction = true;
@@ -111,7 +111,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.LEFT && this.x > 20) {
                 this.moveLeft();
                 this.otherDirection = true;
-                if (this.y === 150 && this.world.gameisMuted) {
+                if (this.y === 150 && !this.world.gameIsMuted) {
                     this.walking_sound.play();
                 }
                 interaction = true;
@@ -130,12 +130,12 @@ class Character extends MovableObject {
 
         let animationsInterval = setInterval(() => {
             if (this.isDead()) {
-                if (!this.dead_sound_played && this.world.gameisMuted) {
+                if ((!this.dead_sound_played) && !this.world.gameIsMuted) {
                     this.dead_sound.volume = 0.3;
                     this.dead_sound.play();
                     this.dead_sound_played = true;
-                    this.stopLost();
                 }
+                this.stopLost();
                 this.playAnimation(this.IMAGES_DEAD);
             } else {
                 if (this.isAboveGround()) {
@@ -152,7 +152,7 @@ class Character extends MovableObject {
                             this.playAnimation(this.IMAGES_WALKING);
                         } else if (Date.now() - lastInteraction > 10000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
-                            if (this.world.gameisMuted) {
+                            if (!this.world.gameIsMuted) {
                                 this.snoring_sound.volume = 1;
                                 this.snoring_sound.play();
                             }
@@ -168,7 +168,7 @@ class Character extends MovableObject {
 
     jump() {
         this.speedY = 25;
-        if (this.world.gameisMuted) {
+        if (!this.world.gameIsMuted) {
             this.jumping_sound.playbackRate = 0.7;
             this.jumping_sound.play();
         }

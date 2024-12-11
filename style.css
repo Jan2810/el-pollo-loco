@@ -120,13 +120,33 @@ canvas {
     margin-bottom: 20px;
 }
 
+.adjustment-buttons {
+    display: flex;
+    height: 55px;
+    max-height: 400px;
+    width: 90%;
+    max-width: 720px;
+    top: 15%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.adjustment-buttons img{
+    height: fit-content;
+    max-height: 50px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
 .responsive-buttons {
     display: flex;
     height: 55px;
     max-height: 400px;
     width: 90%;
     max-width: 720px;
-    top: 80%;
+    top: 70%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;

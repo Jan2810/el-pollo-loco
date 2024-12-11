@@ -23,6 +23,7 @@ class World {
     background_music = new Audio('audio/music.mp3');
     background_music_endboss = new Audio('audio/music_endboss.mp3');
     endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
+    bottle_splash_sound = new Audio('audio/hit_bottle.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -36,26 +37,42 @@ class World {
 
     toggleMute() {
         if (this.gameIsMuted) {
-            this.gameIsMuted = false
-        } else if (!this.gameIsMuted) {
+            this.gameIsMuted = false;
+        } else {
             this.gameIsMuted = true;
         }
     }
 
-
     playBackgroundMusic() {
         setInterval(() => {
-            if (this.character.x > 3300 && !this.gameIsMuted) {
-                this.background_music.pause();
-                this.background_music_endboss.volume = 0.3;
-                this.background_music_endboss.play();
-                this.background_music_endboss.loop = true;
-            } else if (!this.gameIsMuted) {
-                this.background_music.volume = 0.3;
-                this.background_music.play();
-                this.background_music.loop = true;
+            if (!this.gameIsMuted) {
+                if (this.character.x > 3300) {
+                    this.playEndbossMusic();
+                } else {
+                    this.playLevelMusic();
+                }
+            } else if (this.gameIsMuted) {
+                this.muteMusic();
             }
         }, 200);
+    }
+
+    playLevelMusic() {
+        this.background_music.volume = 0.3;
+        this.background_music.play();
+        this.background_music.loop = true;
+    }
+
+    playEndbossMusic() {
+        this.background_music.pause();
+        this.background_music_endboss.volume = 0.3;
+        this.background_music_endboss.play();
+        this.background_music_endboss.loop = true;
+    }
+
+    muteMusic() {
+        this.background_music.pause();
+        this.background_music_endboss.pause();
     }
 
     setWorld() {
@@ -105,6 +122,10 @@ class World {
         enemy.isKilled = true;
         enemy.isActive = false;
         let splash = new SalsaSplash(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+        if (!this.gameIsMuted) {
+            this.bottle_splash_sound.volume = 0.5;
+            this.bottle_splash_sound.play();
+        }
         this.splashObject.push(splash);
     }
 
