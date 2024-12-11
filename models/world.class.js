@@ -1,5 +1,5 @@
 class World {
-    gameIsMuted = true;
+    gameIsMuted;
 
     character = new Character();
     level = level1;
@@ -25,10 +25,11 @@ class World {
     endboss_dead_sound = new Audio('audio/endboss_dead.mp3');
     bottle_splash_sound = new Audio('audio/hit_bottle.mp3');
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, gameIsMuted) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.gameIsMuted = gameIsMuted;
         this.draw();
         this.setWorld();
         this.run();

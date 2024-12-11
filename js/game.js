@@ -2,13 +2,23 @@ let canvas;
 let world;
 keyboard = new Keyboard();
 let keyIsDown = false;
+let gameIsMuted = true;
 
 async function init() {
     clearAllIntervals();
     canvas = document.getElementById("canvas");
     await initLevel();
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, gameIsMuted);
     closeStartScreen();
+}
+
+function toggleMute() {
+    if (gameIsMuted) {
+        gameIsMuted = false;
+    } else {
+        gameIsMuted = true;
+    }
+    console.log(gameIsMuted);
 }
 
 function clearAllIntervals() {
