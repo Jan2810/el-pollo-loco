@@ -15,8 +15,10 @@ async function init() {
 function toggleMute() {
     if (gameIsMuted) {
         gameIsMuted = false;
+        document.getElementById('muteBtn').src = 'img/11_ingame/mute_sound.png';
     } else {
         gameIsMuted = true;
+        document.getElementById('muteBtn').src = 'img/11_ingame/unmute_sound.png';
     }
     console.log(gameIsMuted);
 }
