@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     offsetLeft = 20;
     offsetRight = 20;
     speedX = 1.5;
+    world;
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -81,11 +82,15 @@ class Endboss extends MovableObject {
         let animationInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD)
+                if (!this.world.gameIsMuted) {
                     this.dead_sound.play();
+                }
                 this.stopWin();
             } else if (this.isHurt == true) {
                 this.playAnimation(this.IMAGES_HURT);
-                    this.hurt_sound.play();   
+                if (!this.world.gameIsMuted) {
+                    this.hurt_sound.play();
+                }
                 setTimeout(() => {
                     this.isHurt = false;
                 }, 600);

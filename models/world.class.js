@@ -3,6 +3,7 @@ class World {
 
     character = new Character();
     level = level1;
+    endboss = this.level.enemies[6];
     canvas;
     ctx;
     keyboard;
@@ -45,11 +46,13 @@ class World {
     }
 
     playBackgroundMusic() {
+        let endbossmusic = false;
         setInterval(() => {
             if (!this.gameIsMuted) {
                 if (this.character.x > 3300) {
                     this.playEndbossMusic();
-                } else {
+                    endbossmusic = true;
+                } else if (endbossmusic == false) {
                     this.playLevelMusic();
                 }
             } else if (this.gameIsMuted) {
@@ -78,6 +81,7 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        this.endboss.world = this;
     }
 
     run() {
@@ -112,6 +116,10 @@ class World {
                     clearInterval(interval);
                 } else if (bottle.isColliding(enemy) && bottle.isActive && (enemy instanceof Endboss)) {
                     this.hurtEndboss(enemy, bottle);
+                    if (!this.gameIsMuted) {
+                        this.bottle_splash_sound.volume = 0.5;
+                        this.bottle_splash_sound.play();
+                    }
                     this.splashBottle();
                     clearInterval(interval);
                 }
