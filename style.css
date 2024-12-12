@@ -1,11 +1,13 @@
 /* rubik-gemstones-regular - latin */
 @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
     font-family: 'Rubik Gemstones';
     font-style: normal;
     font-weight: 1000;
-    src: url('./fonts/rubik-gemstones-v1-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-  }
+    src: url('./fonts/rubik-gemstones-v1-latin-regular.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
 
 body {
     font-family: 'Rubik Gemstones';
@@ -17,9 +19,10 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     box-sizing: border-box;
     margin: 0;
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
 }
 
@@ -30,7 +33,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    z-index: 888;
+    z-index: 10;
     opacity: 1;
     display: flex;
     justify-content: center;
@@ -39,13 +42,13 @@ body {
 }
 
 .menu h1 {
-    color: rgb(255,212,0);
-    font-size: 48px;
+    color: rgb(255, 212, 0);
+    font-size: 64px;
     animation: pulse 1s infinite ease-in-out;
     text-shadow: 1px 1px 2px pink;
     padding: 10px 20px;
-    width: 200px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 200px;
     height: 40px;
     max-height: 100%;
     text-align: center;
@@ -68,13 +71,13 @@ body {
     max-width: 200px;
     width: 100%;
     margin-bottom: 10px;
-    backdrop-filter: blur(5px); /* Weicher Blur-Effekt */
-    -webkit-backdrop-filter: blur(5px); /* Für Safari */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .menu-button:hover {
     cursor: pointer;
-    color: rgb(255,212,0);
+    color: rgb(255, 212, 0);
     transform: scale(1.2);
 }
 
@@ -82,7 +85,7 @@ body {
     font-family: 'Rubik Gemstones';
     height: 100vh;
     width: 100%;
-    z-index: 999;
+    z-index: 100;
     display: flex;
     justify-content: center;
     position: absolute;
@@ -95,20 +98,22 @@ body {
 
 .overlay-text {
     margin-top: 50px;
-    color: rgb(255,212,0);
+    color: rgb(255, 212, 0);
     font-size: 48px;
     animation: pulse 1s infinite ease-in-out;
 }
 
 @keyframes pulse {
     0% {
-        font-size: 48px; /* Startgröße */
+        font-size: 48px;
     }
+
     50% {
-        font-size: 60px; /* Maximale Größe */
+        font-size: 60px;
     }
+
     100% {
-        font-size: 48px; /* Zurück zur Startgröße */
+        font-size: 48px;
     }
 }
 
@@ -117,43 +122,51 @@ canvas {
     display: block;
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
-    margin-bottom: 20px;
 }
 
-.adjustment-buttons {
+.canvas-overlay {
     display: flex;
-    height: 55px;
-    max-height: 400px;
-    width: 90%;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 68%;
     max-width: 720px;
-    top: 15%;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    max-height: 480px;
+    background-color: rgba(0, 0, 0, 0.2);
     position: absolute;
 }
 
-.adjustment-buttons img{
-    height: fit-content;
+.adjustment-buttons {
+    margin-top: 16px;
+    display: flex;
+    height: 100%;
+    max-height: 55px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.adjustment-buttons img {
+    /* width: 100%; */
+    height: 100%;
+    max-width: 50px;
     max-height: 50px;
     margin-right: 20px;
     margin-left: 20px;
 }
 
-.responsive-buttons {
-    display: flex;
-    height: 55px;
-    max-height: 400px;
-    width: 90%;
-    max-width: 720px;
-    top: 70%;
+.responsive-buttons-panel {
+    display: none;
+    height: 100%;
+    max-height: 55px;
+    margin-bottom: 8px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
 }
 
-.responsive-buttons img {
+.responsive-buttons-panel img {
     height: fit-content;
     max-height: 50px;
     margin-right: 20px;
@@ -161,7 +174,7 @@ canvas {
 }
 
 .game-lost-overlay {
-    z-index: 10000;
+    z-index: 1000;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -186,7 +199,7 @@ canvas {
 
 
 .game-won-overlay {
-    z-index: 10000;
+    z-index: 1000;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -194,7 +207,7 @@ canvas {
     align-items: center;
 }
 
-.game-won-overlay img{
+.game-won-overlay img {
     width: 80%;
     height: auto;
 }
@@ -206,13 +219,14 @@ canvas {
     box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     padding: 0px 20px;
+    margin-top: 20px;
     color: rgb(65, 35, 2);
     gap: 30px;
 }
 
 .description-item {
-    display: flex; 
-    flex-direction: row; 
+    display: flex;
+    flex-direction: row;
     align-items: center;
 }
 
@@ -231,10 +245,70 @@ canvas {
     canvas {
         width: 100%;
     }
+
+    body {
+        background-size: contain;
+        background-position: top;
+    }
 }
 
 @media only screen and (max-height: 480px) {
     canvas {
-        height: 100vh;
+        height: 100dvh;
+    }
+}
+
+@media only screen and (max-height: 695px) {
+    .responsive-buttons-panel {
+        display: flex;
+    }
+
+    .description {
+        display: none;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .responsive-buttons-panel {
+        display: flex;
+    }
+
+    .description {
+        display: none;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .responsive-buttons-panel {
+        display: none;
+    }
+
+    .description {
+        display: flex;
+    }
+}
+
+@media (orientation: portrait) {
+    .orientation-overlay {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        position: absolute;
+        z-index: 9999;
+        height: 100dvh;
+        width: 100%;
+        background-image: url("./img/5_background/first_half_background.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+}
+
+@media (orientation: landscape) {
+    .orientation-overlay {
+        display: none;
     }
 }

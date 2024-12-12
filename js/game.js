@@ -29,7 +29,7 @@ function clearAllIntervals() {
 
 function closeStartScreen() {
     document.getElementById("menu").classList.add("d-none");
-    document.getElementById("fullscreen").classList.remove("d-none");
+    document.getElementById("fullScreen").classList.remove("d-none");
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("description").classList.remove("d-none");
 }

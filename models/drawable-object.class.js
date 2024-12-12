@@ -51,7 +51,7 @@ class DrawableObject {
             world.background_music_endboss.pause();
             world.background_music.pause();
             this.clearAllIntervals();
-            document.getElementById("fullscreen").classList.add("d-none");
+            document.getElementById("fullScreen").classList.add("d-none");
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("description").classList.add("d-none");
             document.getElementById("gameLostOverlay").classList.remove("d-none");
@@ -63,7 +63,7 @@ class DrawableObject {
             world.background_music_endboss.pause();
             world.background_music.pause();
             this.clearAllIntervals();
-            document.getElementById("fullscreen").classList.add("d-none");
+            document.getElementById("fullScreen").classList.add("d-none");
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("description").classList.add("d-none");
             document.getElementById("gameWonOverlay").classList.remove("d-none");
