@@ -38,6 +38,10 @@ function closeOverlay(overlay) {
     document.getElementById(overlay).classList.add("d-none");
 }
 
+function openOverlay(overlay) {
+    document.getElementById(overlay).classList.remove("d-none");
+}
+
 function goToMenu(overlay) {
     document.getElementById(overlay).classList.add("d-none");
     document.getElementById("menu").classList.remove("d-none");

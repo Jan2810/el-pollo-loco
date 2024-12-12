@@ -147,7 +147,6 @@ canvas {
 }
 
 .adjustment-buttons img {
-    /* width: 100%; */
     height: 100%;
     max-width: 50px;
     max-height: 50px;
@@ -170,6 +169,28 @@ canvas {
     max-height: 50px;
     margin-right: 20px;
     margin-left: 20px;
+}
+
+.imprint-overlay {
+    background-image: url("./img/5_background/first_half_background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 10000;
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.imprint {
+    padding: 100px;
+}
+
+#closeImprintBtn {
+   
 }
 
 .game-lost-overlay {

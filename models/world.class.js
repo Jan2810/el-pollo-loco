@@ -1,9 +1,8 @@
 class World {
     gameIsMuted;
-
     character = new Character();
     level = level1;
-    endboss = this.level.enemies[6];
+    endboss = this.level.enemies[12];
     canvas;
     ctx;
     keyboard;
