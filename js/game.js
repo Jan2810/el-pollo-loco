@@ -4,9 +4,6 @@ keyboard = new Keyboard();
 let keyIsDown = false;
 let gameIsMuted = true;;
 
-
-
-
 /**
  * Initializes the game by clearing all intervals, getting the canvas element,
  * initializing the level, creating a new World instance, and closing the start screen.
@@ -22,7 +19,6 @@ async function init() {
     closeStartScreen();
 }
 
-
 /**
  * Toggles the game's sound on or off.
  * Updates the mute button's image and logs the current mute status to the console.
@@ -32,14 +28,12 @@ async function init() {
 function toggleMute() {
     if (gameIsMuted) {
         gameIsMuted = false;
-        document.getElementById('muteBtn').src = 'img/11_ingame/mute_sound.png';
+        document.getElementById('muteBtn').src = 'img/11_ingame/unmute_sound.png';
     } else {
         gameIsMuted = true;
-        document.getElementById('muteBtn').src = 'img/11_ingame/unmute_sound.png';
-    }
-    console.log(gameIsMuted);
+        document.getElementById('muteBtn').src = 'img/11_ingame/mute_sound.png';
+    };
 }
-
 
 /**
  * Clears all intervals by iterating through a range of interval IDs and using the clearInterval function.
@@ -50,7 +44,6 @@ function toggleMute() {
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
-
 
 /**
  * Closes the start screen by hiding the menu, full screen, canvas, and description elements.
@@ -64,7 +57,6 @@ function closeStartScreen() {
     document.getElementById("description").classList.remove("d-none");
 }
 
-
 /**
  * Closes a specified overlay element by adding the "d-none" class to it.
  *
@@ -75,7 +67,6 @@ function closeStartScreen() {
 function closeOverlay(overlay) {
     document.getElementById(overlay).classList.add("d-none");
 }
-
 
 /**
  * Opens a specified overlay element by removing the "d-none" class from it.
@@ -88,7 +79,6 @@ function openOverlay(overlay) {
     document.getElementById(overlay).classList.remove("d-none");
 }
 
-
 /**
  * Navigates to the main menu by hiding the specified overlay element and showing the main menu.
  *
@@ -100,7 +90,6 @@ function goToMenu(overlay) {
     document.getElementById(overlay).classList.add("d-none");
     document.getElementById("menu").classList.remove("d-none");
 }
-
 
 /**
  * Event listener for keydown events. Updates the state of the keyboard object based on the pressed key.
@@ -138,7 +127,6 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
-
 /**
  * Event listener for keyup events. Updates the state of the keyboard object based on the released key.
  *
@@ -174,8 +162,6 @@ window.addEventListener('keyup', (event) => {
         keyIsDown = false;
     }
 });
-
-
 
 /**
  * Sets up touch event listeners for the game's touch controls.

@@ -237,6 +237,7 @@ canvas {
 .game-won-overlay img {
     width: 80%;
     height: auto;
+    max-width: 1440px;
 }
 
 .description {

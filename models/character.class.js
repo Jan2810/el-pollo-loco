@@ -136,13 +136,7 @@ class Character extends MovableObject {
 
         let animationsInterval = setInterval(() => {
             if (this.isDead()) {
-                if ((!this.dead_sound_played) && !this.world.gameIsMuted) {
-                    this.dead_sound.volume = 0.3;
-                    this.dead_sound.play();
-                    this.dead_sound_played = true;
-                }
-                this.stopLost();
-                this.playAnimation(this.IMAGES_DEAD);
+                this.characterDeadAnimation();
             } else {
                 if (this.isAboveGround()) {
                     this.playAnimation(this.IMAGES_JUMPING);
@@ -172,6 +166,19 @@ class Character extends MovableObject {
         this.intervalIDs.push(animationsInterval);
     }
 
+    /**
+     * This function handles the character's death animation and sound effect.
+     *
+     */
+    characterDeadAnimation() {
+        if ((!this.dead_sound_played) && !this.world.gameIsMuted) {
+            this.dead_sound.volume = 0.3;
+            this.dead_sound.play();
+            this.dead_sound_played = true;
+        }
+        this.stopLost();
+        this.playAnimation(this.IMAGES_DEAD);
+    }
 
     /**
      * This function is responsible for making the character jump.
@@ -187,8 +194,7 @@ class Character extends MovableObject {
             this.jumping_sound.play();
         }
     }
-
-
+    
     /**
      * This function is responsible for making the character bounce.
      * It sets the vertical speed of the character to a positive value, simulating the bouncing motion after jumping ontop of an enemy.

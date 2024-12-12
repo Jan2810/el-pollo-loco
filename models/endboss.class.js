@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
     offsetBottom = 40;
     offsetLeft = 20;
     offsetRight = 20;
-    speedX = 1.5;
+    speedX = 5;
     world;
 
     IMAGES_ALERT = [
@@ -78,7 +78,7 @@ class Endboss extends MovableObject {
      * @returns {void}
      */
     hitByBottle() {
-        this.energy -= 40;
+        this.energy -= 20;
         if (this.energy <= 0) {
             this.energy = 0;
             this.isDead();
