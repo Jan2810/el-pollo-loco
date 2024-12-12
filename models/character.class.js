@@ -150,7 +150,7 @@ class Character extends MovableObject {
                     } else {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {
                             this.playAnimation(this.IMAGES_WALKING);
-                        } else if (Date.now() - lastInteraction > 10000) {
+                        } else if (Date.now() - lastInteraction > 1000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
                             if (!this.world.gameIsMuted) {
                                 this.snoring_sound.volume = 1;
@@ -202,7 +202,7 @@ class Character extends MovableObject {
      * @returns {void}
      */
     bounce() {
-        this.speedY = +10;
+        this.speedY = 20;
     }
 
 }
