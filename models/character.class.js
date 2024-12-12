@@ -143,7 +143,7 @@ class Character extends MovableObject {
                 } else {
                     if (this.isHurt()) {
                         this.playAnimation(this.IMAGES_HURT);
-                        if (this.world.gameisMuted) {
+                        if (!this.world.gameisMuted) {
                             this.hurt_sound.volume = 0.3;
                             this.hurt_sound.play();
                         }
