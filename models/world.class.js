@@ -36,6 +36,13 @@ class World {
         this.playBackgroundMusic();
     }
 
+    /**
+     * Toggles the game's mute status.
+     * If the game is currently muted, it will unmute it, and vice versa.
+     *
+     * @function toggleMute
+     * @memberof World
+     */
     toggleMute() {
         if (this.gameIsMuted) {
             this.gameIsMuted = false;
@@ -44,6 +51,13 @@ class World {
         }
     }
 
+    /**
+     * Manages and controls the background music of the game.
+     * Changes the music based on the game's progression and mute status.
+     *
+     * @function playBackgroundMusic
+     * @memberof World
+     */
     playBackgroundMusic() {
         let endbossmusic = false;
         setInterval(() => {
@@ -60,12 +74,26 @@ class World {
         }, 200);
     }
 
+    /**
+     * Manages and controls the background music of the game during the level.
+     * Changes the music's volume and starts playing the music in a loop.
+     *
+     * @function playLevelMusic
+     * @memberof World
+     */
     playLevelMusic() {
         this.background_music.volume = 0.3;
         this.background_music.play();
         this.background_music.loop = true;
     }
 
+    /**
+     * Manages and controls the background music of the game during the endboss level.
+     * Changes the music's volume and starts playing the music in a loop.
+     *
+     * @function playEndbossMusic
+     * @memberof World
+     */
     playEndbossMusic() {
         this.background_music.pause();
         this.background_music_endboss.volume = 0.3;
@@ -73,16 +101,37 @@ class World {
         this.background_music_endboss.loop = true;
     }
 
+    /**
+     * Manages and controls the background music of the game.
+     * Pauses both the level music and the endboss music.
+     *
+     * @function muteMusic
+     * @memberof World
+     */
     muteMusic() {
         this.background_music.pause();
         this.background_music_endboss.pause();
     }
 
+    /**
+     * Sets the world context for the character and endboss.
+     * This function is called when initializing the world to establish a reference to the world instance for the character and endboss.
+     *
+     * @function setWorld
+     * @memberof World
+     */
     setWorld() {
         this.character.world = this;
         this.endboss.world = this;
     }
 
+    /**
+     * Manages and controls the game's main loop.
+     * This function is responsible for checking collisions, collecting objects, and throwing objects at regular intervals.
+     *
+     * @function run
+     * @memberof World
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -92,6 +141,12 @@ class World {
         }, 100);
     }
 
+    /**
+     * Manages and controls the throwing of objects by the character.
+     *
+     * @function throwObjects
+     * @memberof World
+     */
     throwObjects() {
         if (this.keyboard.D && !this.keyboard.keyIsDown && this.statusbar[0].amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
@@ -104,6 +159,13 @@ class World {
         }
     }
 
+    /**
+     * Checks for collisions between the given bottle and enemies in the game world.
+     *
+     * @function checkBottleCollision
+     * @memberof World
+     * @param {ThrowableObject} bottle - The bottle object to check collisions with.
+     */
     checkBottleCollision(bottle) {
         let interval = setInterval(() => {
             for (let i = 0; i < this.level.enemies.length; i++) {
@@ -125,7 +187,14 @@ class World {
             }
         }, 10);
     }
-
+    
+    /**
+     * Kills the given enemy by setting its 'isKilled' and 'isActive' properties to false.
+     *
+     * @function killEnemy
+     * @memberof World
+     * @param {Enemy} enemy - The enemy object to be killed.
+     */
     killEnemy(enemy) {
         enemy.isKilled = true;
         enemy.isActive = false;
@@ -137,6 +206,14 @@ class World {
         this.splashObject.push(splash);
     }
 
+    /**
+     * Handles the action when the character hits the endboss with a bottle.
+     *
+     * @function hurtEndboss
+     * @memberof World
+     * @param {Enemy} enemy - The endboss object to be hit.
+     * @param {ThrowableObject} bottle - The bottle object used to hit the endboss.
+     */
     hurtEndboss(enemy, bottle) {
         enemy.hitByBottle();
         enemy.isHurt = true;
@@ -146,12 +223,25 @@ class World {
         this.splashObject.push(splash);
     }
 
+    /**
+     * Handles the action of creating a splash effect when a bottle hits an enemy.
+     * Removes the first splash object from the 'splashObject' array after a 300ms delay.
+     *
+     * @function splashBottle
+     * @memberof World
+     */
     splashBottle() {
         setTimeout(() => {
             this.splashObject.splice(0, 1);
         }, 300);
     }
 
+    /**
+     * Checks for collisions between the character and enemies in the game world.
+     *
+     * @function checkCollisions
+     * @memberof World
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken) && this.character.speedY < 0 && this.character.isColliding(enemy)) {
@@ -162,44 +252,61 @@ class World {
                     this.chicken_dead_sound.play();
                 }
                 this.character.bounce();
-            } else if (enemy.isActive && this.character.isColliding(enemy)) {
+            } 
+            else if (enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar[1].setPercentage(this.character.energy)
             }
         });
     }
 
+    /**
+     * Checks for collisions between the character and salsa bottles in the game world.
+     *
+     * @function checkBottleCollections
+     * @memberof World
+     */
     checkBottleCollections() {
         this.level.salsaBottle.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.level.salsaBottle.splice(index, 1);
-                this.statusbar[0].increaseAmount();
+                this.level.salsaBottle.splice(index, 1); // Remove the collected salsa bottle from the array
+                this.statusbar[0].increaseAmount(); // Increase the salsa bottle count in the status bar
                 if (!this.gameIsMuted) {
                     this.collect_bottle_sound.volume = 0.5;
-                    this.collect_bottle_sound.play();
+                    this.collect_bottle_sound.play(); // Play a sound when a salsa bottle is collected
                 }
             }
         });
     }
 
+    /**
+     * Checks for collisions between the character and coins in the game world.
+     *
+     * @function checkCoinCollections
+     * @memberof World
+     */
     checkCoinCollections() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                this.level.coins.splice(index, 1);
-                this.statusbar[2].increaseAmount();
+                this.level.coins.splice(index, 1); // Remove the collected coin from the array
+                this.statusbar[2].increaseAmount(); // Increase the coin count in the status bar
                 if (!this.gameIsMuted) {
                     this.collect_coin_sound.volume = 0.2;
-                    this.collect_coin_sound.play();
+                    this.collect_coin_sound.play(); // Play a sound when a coin is collected
                 }
             }
         });
     }
 
+    /**
+     * Draws the game world
+     *
+     * @function draw
+     * @memberof World
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.salsaBottle);
@@ -207,27 +314,38 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObject);
         this.addObjectsToMap(this.splashObject);
-
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.statusbar);
         this.ctx.translate(this.camera_x, 0);
-
         this.addToMap(this.character);
-
         this.ctx.translate(-this.camera_x, 0);
-
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
     }
 
+    /**
+     * Adds objects to the game map.
+     * This function iterates through the given array of objects and calls the addToMap function for each object.
+     *
+     * @function addObjectsToMap
+     * @memberof World
+     * @param {Array.<Object>} objects - An array of game objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         })
     }
 
+    /**
+     * Adds the given game object to the game map.
+     *
+     * @function addToMap
+     * @memberof World
+     * @param {Object} object - The game object to be added to the map.
+     */
     addToMap(object) {
         if (object.otherDirection) {
             this.flipImage(object);
@@ -240,16 +358,31 @@ class World {
             this.flipImageBack(object);
         }
     }
-
+    /**
+     * Flips the image of the given game object horizontally.
+     * This function is used to draw the object in the opposite direction.
+     *
+     * @function flipImage
+     * @memberof World
+     * @param {Object} object - The game object to be flipped.
+     */
     flipImage(object) {
         this.ctx.save();
-        this.ctx.translate(object.width, 0)
+        this.ctx.translate(object.width, 0);
         this.ctx.scale(-1, 1);
-        object.x = object.x * -1
+        object.x = object.x * -1;
     }
 
+    /**
+     * Restores the context after flipping the image back to its original state.
+     * This function is used to draw the object in the correct direction.
+     *
+     * @function flipImageBack
+     * @memberof World
+     * @param {Object} object - The game object to be restored.
+     */
     flipImageBack(object) {
-        object.x = object.x * -1
-        this.ctx.restore();
+        object.x = object.x * -1; // Restore the original x position of the object
+        this.ctx.restore(); // Restore the context to its original state
     }
 }

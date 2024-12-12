@@ -19,12 +19,30 @@ class Energybar extends Statusbar {
         this.setPercentage(100);
     }
 
+    /**
+     * Updates the energy bar's percentage and corresponding image.
+     *
+     * @param {number} percentage - The new percentage value for the energy bar. Must be between 0 and 100.
+     *
+     * @returns {void}
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_ENERGY[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     };
 
+    /**
+     * Resolves the index of the image to be displayed based on the current energy percentage.
+     *
+     * @returns {number} The index of the image to be displayed. The index corresponds to the following energy percentages:
+     * - 100: 5
+     * - 80-99: 4
+     * - 60-79: 3
+     * - 40-59: 2
+     * - 20-39: 1
+     * - 0-19: 0
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;
@@ -40,4 +58,5 @@ class Energybar extends Statusbar {
             return 0;
         }
     };
+
 }

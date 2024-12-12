@@ -70,6 +70,13 @@ class Endboss extends MovableObject {
         this.movementAnimation();
     }
 
+    /**
+     * This function is called when the endboss object is hit by a bottle.
+     * It reduces the endboss's energy by 40 points and checks if the endboss's energy is depleted.
+     * If the endboss's energy is depleted, it calls the isDead() method.
+     *
+     * @returns {void}
+     */
     hitByBottle() {
         this.energy -= 40;
         if (this.energy <= 0) {
@@ -78,10 +85,16 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * This function manages the endboss's animation. It uses setInterval to create a loop that changes the endboss's image
+     * based on its current state (walking, hurting, or dead). It also plays the corresponding sound effect.
+     *
+     * @returns {void}
+     */
     animate() {
         let animationInterval = setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD)
+                this.playAnimation(this.IMAGES_DEAD);
                 if (!this.world.gameIsMuted) {
                     this.dead_sound.play();
                 }
@@ -101,6 +114,13 @@ class Endboss extends MovableObject {
         this.intervalIDs.push(animationInterval);
     }
 
+
+    /**
+     * This function manages the endboss's movement animation. It uses setInterval to create a loop that changes the endboss's position
+     * based on its current walking direction. It also handles the endboss's walking direction change after a certain time.
+     *
+     * @returns {void}
+     */
     movementAnimation() {
         let movementInterval = setInterval(() => {
             if (!this.isDead()) {
@@ -110,11 +130,10 @@ class Endboss extends MovableObject {
                     this.x += this.speedX;
                 }
             }
-        }, 1000 / 60)
-
+        }, 1000 / 60);
         setTimeout(() => {
-            if (this.isWalkingLeft == true) {
-                this.isWalkingLeft = false
+            if (this.isWalkingLeft === true) {
+                this.isWalkingLeft = false;
             } else {
                 this.isWalkingLeft = true;
             }
@@ -124,6 +143,12 @@ class Endboss extends MovableObject {
         this.intervalIDs.push(movementInterval);
     }
 
+    /**
+     * This function manages the endboss's attacking animation. It uses setInterval to create a loop that changes the endboss's image
+     * based on its current walking direction. It also handles the endboss's attacking animation and switching back to its walking animation.
+     *
+     * @returns {void}
+     */
     attackingAnimation() {
         let attackInterval = setInterval(() => {
             if (this.isWalkingLeft == false) {
@@ -132,22 +157,15 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_ALERT);
             }
         }, 300);
-
         setTimeout(() => {
             if (this.otherDirection == true) {
-                this.otherDirection = false
+                this.otherDirection = false;
             } else {
-                this.otherDirection = true
+                this.otherDirection = true;
             }
             clearInterval(attackInterval);
             this.movementAnimation();
         }, 2000);
         this.intervalIDs.push(attackInterval);
     }
-
-
 }
-
-// this.playAnimation(this.IMAGES_ALERT);
-// this.playAnimation(this.IMAGES_WALK)
-// this.playAnimation(this.IMAGES_ATTACK)

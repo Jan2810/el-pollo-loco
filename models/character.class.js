@@ -92,6 +92,12 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function manages the character's animations and interactions with the game world.
+     * It includes character movement, sound effects, and animation changes based on the character's state.
+     *
+     * @returns {void}
+     */
     animate() {
         let lastInteraction = Date.now();
 
@@ -143,7 +149,7 @@ class Character extends MovableObject {
                 } else {
                     if (this.isHurt()) {
                         this.playAnimation(this.IMAGES_HURT);
-                        if (!this.world.gameisMuted) {
+                        if (!this.world.gameIsMuted) {
                             this.hurt_sound.volume = 0.3;
                             this.hurt_sound.play();
                         }
@@ -166,6 +172,14 @@ class Character extends MovableObject {
         this.intervalIDs.push(animationsInterval);
     }
 
+
+    /**
+     * This function is responsible for making the character jump.
+     * It sets the vertical speed of the character to a positive value, simulating the jumping motion.
+     * Additionally, it plays a sound effect for the jumping action if the game is not muted.
+     *
+     * @returns {void}
+     */
     jump() {
         this.speedY = 25;
         if (!this.world.gameIsMuted) {
@@ -174,7 +188,15 @@ class Character extends MovableObject {
         }
     }
 
+
+    /**
+     * This function is responsible for making the character bounce.
+     * It sets the vertical speed of the character to a positive value, simulating the bouncing motion after jumping ontop of an enemy.
+     *
+     * @returns {void}
+     */
     bounce() {
         this.speedY = +10;
     }
+
 }

@@ -46,6 +46,12 @@ class DrawableObject {
     //     };
     // }
 
+    /**
+     * This function stops the game and displays the game lost overlay after a 1-second delay.
+     * It pauses the background music, clears all intervals, and modifies the visibility of HTML elements.
+     *
+     * @returns {void}
+     */
     stopLost() {
         setTimeout(() => {
             world.background_music_endboss.pause();
@@ -58,6 +64,13 @@ class DrawableObject {
         }, 1000);
     }
 
+
+    /**
+     * This function stops the game and displays the game won overlay after a 2-second delay.
+     * It pauses the background music, clears all intervals, and modifies the visibility of HTML elements.
+     *
+     * @returns {void}
+     */
     stopWin() {
         setTimeout(() => {
             world.background_music_endboss.pause();
@@ -70,10 +83,17 @@ class DrawableObject {
         }, 2000);
     }
 
+
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
-
-    //   this.intervalIDs.forEach(id => clearInterval(id));
-
+    /**
+     * This function clears all intervals by iterating through a range of possible interval IDs and using the clearInterval function.
+     * This is a workaround for the fact that clearInterval does not accept an array of IDs, and there is no built-in method to retrieve all interval IDs.
+     *
+     * @returns {void}
+     */
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    }
 }

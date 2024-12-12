@@ -185,12 +185,19 @@ canvas {
     flex-direction: column;
 }
 
-.imprint {
-    padding: 100px;
+.imprint-contrast-overlay {
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 10000;
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
-#closeImprintBtn {
-   
+.imprint {
+    padding: 100px;
+    max-width: 1440px;
 }
 
 .game-lost-overlay {

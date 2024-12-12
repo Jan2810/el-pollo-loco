@@ -23,6 +23,15 @@ class SalsaSplash extends MovableObject {
         this.playSplashAnimation();
     }
 
+    /**
+     * Plays a splash animation for the salsa bottle.
+     * The animation consists of a sequence of images representing the bottle's splash.
+     *
+     * @function playSplashAnimation
+     * @memberof SalsaSplash
+     *
+     * @returns {void}
+     */
     playSplashAnimation() {
         let currentImage = 0;
         let animationInterval = setInterval(() => {

@@ -12,7 +12,6 @@ class Chicken extends MovableObject {
     isKilled = false;
     isActive = true;
 
-
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -31,6 +30,16 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the chicken's movement and appearance.
+     *
+     * This function sets up three intervals:
+     * 1. A movement interval that moves the chicken left while it's not killed.
+     * 2. A walking animation interval that changes the chicken's image to create a walking animation.
+     * 3. A death check interval that loads the dead image when the chicken is killed.
+     *
+     * @returns {void}
+     */
     animate() {
         let moveInterval = setInterval(() => {
             if (!this.isKilled) {
@@ -58,4 +67,5 @@ class Chicken extends MovableObject {
         }, 200);
         this.intervalIDs.push(deathCheckInterval);
     }
+
 }

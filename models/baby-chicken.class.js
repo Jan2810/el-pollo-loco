@@ -27,8 +27,14 @@ class BabyChicken extends MovableObject {
         this.speed = 0.2 + Math.random() * 0.25;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
-    }
+    };
 
+    /**
+     * This function manages the animations and behaviors of the BabyChicken object.
+     * It includes moving the chicken left, playing the walking animation, and checking for death.
+     *
+     * @returns {void}
+     */
     animate() {
         let moveInterval = setInterval(() => {
             if (!this.isKilled) {
@@ -38,7 +44,7 @@ class BabyChicken extends MovableObject {
             }
         }, 1000 / 60);
         this.intervalIDs.push(moveInterval);
-        
+
 
         let walkingAnimationInterval = setInterval(() => {
             if (!this.isKilled) {
@@ -57,5 +63,4 @@ class BabyChicken extends MovableObject {
         }, 200);
         this.intervalIDs.push(deathCheckInterval);        
     }
-
 }

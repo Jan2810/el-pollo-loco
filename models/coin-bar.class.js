@@ -19,9 +19,19 @@ class Coinbar extends Statusbar {
         this.loadImages(this.IMAGES_COINS);
     }
 
+    /**
+     * Increases the coin amount by one and updates the coinbar image.
+     *
+     * @method increaseAmount
+     * @memberof Coinbar
+     * @instance
+     *
+     * @returns {void}
+     */
     increaseAmount() {
         this.amount++;
         let path = this.IMAGES_COINS[this.amount]; /// muss gefixed werden nach collision
         this.img = this.imageCache[path];
     };
+
 }

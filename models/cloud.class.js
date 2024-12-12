@@ -12,10 +12,24 @@ class Cloud extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the cloud object by continuously moving it to the left.
+     *
+     * @function animate
+     * @memberof Cloud
+     * @instance
+     *
+     * @returns {undefined} This function does not return a value.
+     *
+     * @example
+     * let cloud = new Cloud('path/to/cloud.png', 500);
+     * cloud.animate();
+     */
     animate() {
         let animationInterval = setInterval(() => {
             this.moveLeft()
         }, 1000/60);
         this.intervalIDs.push(animationInterval);
     }
+
 }

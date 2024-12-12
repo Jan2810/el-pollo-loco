@@ -26,6 +26,12 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function is responsible for throwing the throwable object.
+     * It sets the initial vertical speed, applies gravity, and moves the object horizontally.
+     *
+     * @returns {void}
+     */
     throw() {
         this.speedY = 35;
         this.applyGravity();
@@ -33,7 +39,15 @@ class ThrowableObject extends MovableObject {
             this.x += 18;
         }, 40);
     }
-
+    /**
+     * This function is responsible for animating the throwable object based on keyboard input.
+     * It checks if the 'D' key is pressed and, if so, calls the 'throw' method and starts the animation.
+     *
+     * @param {number} x - The x-coordinate of the object.
+     * @param {number} y - The y-coordinate of the object.
+     *
+     * @returns {void}
+     */
     animate(x, y) {
         if (this.keyboard.D) {
             this.throw(x, y);
@@ -42,5 +56,4 @@ class ThrowableObject extends MovableObject {
             }, 100);
         }
     }
-
 }

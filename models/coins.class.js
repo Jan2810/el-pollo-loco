@@ -20,10 +20,23 @@ class Coin extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the coin by cycling through the pulse images.
+     *
+     * @function animate
+     * @memberof Coin
+     * @instance
+     *
+     * @returns {undefined} This function does not return a value.
+     *
+     * @example
+     * coinInstance.animate();
+     */
     animate() {
         let animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_PULSE)
         }, 200);
         this.intervalIDs.push(animationInterval);
     }
+
 }

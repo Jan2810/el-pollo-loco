@@ -19,15 +19,43 @@ class Bottlebar extends Statusbar {
         this.loadImages(this.IMAGES_BOTTLE);
     }
 
+    /**
+     * Increases the amount of the bottlebar status and updates the image accordingly.
+     *
+     * @function increaseAmount
+     * @memberof Bottlebar
+     * @instance
+     *
+     * @returns {void}
+     *
+     * @example
+     * // Increase the amount of the bottlebar status
+     * bottlebar.increaseAmount();
+     */
     increaseAmount() {
         this.amount++;
         let path = this.IMAGES_BOTTLE[this.amount];
         this.img = this.imageCache[path];
     };
 
+
+    /**
+     * Reduces the amount of the bottlebar status and updates the image accordingly.
+     *
+     * @function reduceAmount
+     * @memberof Bottlebar
+     * @instance
+     *
+     * @returns {void}
+     *
+     * @example
+     * // Reduce the amount of the bottlebar status
+     * bottlebar.reduceAmount();
+     */
     reduceAmount() {
         this.amount--;
         let path = this.IMAGES_BOTTLE[this.amount];
         this.img = this.imageCache[path];
     }
+
 }
