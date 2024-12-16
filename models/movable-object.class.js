@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     lastHit = 0;
-    energy = 100;
+    energy = 100; 
 
     /**
      * Applies gravity to the movable object.
@@ -135,6 +135,7 @@ class MovableObject extends DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+        return;
     }
 
 }

@@ -79,6 +79,7 @@ class Character extends MovableObject {
     offsetBottom = 12;
     offsetLeft = 30;
     offsetRight = 40;
+    lastInteraction = Date.now();
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -89,52 +90,61 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
-        this.animate();
+        this.characterMovement();
+        this.characterAnimations();
     }
 
     /**
-     * This function manages the character's animations and interactions with the game world.
-     * It includes character movement, sound effects, and animation changes based on the character's state.
+     * This function handles the character's movement and interaction with the keyboard inputs.
+     * It uses an interval to continuously update the character's position and play sound effects based on the keyboard inputs.
      *
      * @returns {void}
      */
-    animate() {
-        let lastInteraction = Date.now();
-
-        let moveInterval = setInterval(() => {
+    characterMovement() {
+        setInterval(() => {
             this.walking_sound.pause();
             let interaction = false;
-
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.walking_sound.playbackRate = 2;
-                if (this.y === 150 && !this.world.gameIsMuted) {
-                    this.walking_sound.play();
-                }
+                this.characterMoveRight();
                 interaction = true;
             }
             if (this.world.keyboard.LEFT && this.x > 20) {
-                this.moveLeft();
-                this.otherDirection = true;
-                if (this.y === 150 && !this.world.gameIsMuted) {
-                    this.walking_sound.play();
-                }
+                this.characterMoveLeft();
                 interaction = true;
             }
             if (!this.isAboveGround() && this.world.keyboard.SPACE) {
-                this.jump();
+                this.characterJump();
+                interaction = true;
+            }
+            if(this.world.keyboard.D) {
                 interaction = true;
             }
             this.world.camera_x = -this.x + 50;
-
             if (interaction) {
-                lastInteraction = Date.now();
+                this.lastInteraction = Date.now();
             }
         }, 1000 / 60);
-        this.intervalIDs.push(moveInterval);
+    }
 
-        let animationsInterval = setInterval(() => {
+    characterMoveRight() {
+        this.moveRight();
+        this.otherDirection = false;
+        this.walking_sound.playbackRate = 2;
+        if (this.y === 150 && !this.world.gameIsMuted) {
+            this.walking_sound.play();
+        }
+    }
+
+    characterMoveLeft() {
+        this.moveLeft();
+        this.otherDirection = true;
+        if (this.y === 150 && !this.world.gameIsMuted) {
+            this.walking_sound.play();
+        }
+    }
+
+    characterAnimations() {
+        setInterval(() => {
             if (this.isDead()) {
                 this.characterDeadAnimation();
             } else {
@@ -143,19 +153,13 @@ class Character extends MovableObject {
                 } else {
                     if (this.isHurt()) {
                         this.playAnimation(this.IMAGES_HURT);
-                        if (!this.world.gameIsMuted) {
-                            this.hurt_sound.volume = 0.3;
-                            this.hurt_sound.play();
-                        }
+                        this.playHurtSound();
                     } else {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {
                             this.playAnimation(this.IMAGES_WALKING);
-                        } else if (Date.now() - lastInteraction > 1000) {
+                        } else if (Date.now() - this.lastInteraction > 5000) {
                             this.playAnimation(this.IMAGES_LONG_IDLE);
-                            if (!this.world.gameIsMuted) {
-                                this.snoring_sound.volume = 1;
-                                this.snoring_sound.play();
-                            }
+                            this.playSnoringSound();
                         } else {
                             this.playAnimation(this.IMAGES_IDLE);
                         }
@@ -163,7 +167,20 @@ class Character extends MovableObject {
                 }
             }
         }, 200);
-        this.intervalIDs.push(animationsInterval);
+    }
+
+    playHurtSound() {
+        if (!this.world.gameIsMuted) {
+            this.hurt_sound.volume = 0.3;
+            this.hurt_sound.play();
+        }
+    }
+
+    playSnoringSound() {
+        if (!this.world.gameIsMuted) {
+            this.snoring_sound.volume = 1;
+            this.snoring_sound.play();
+        }
     }
 
     /**
@@ -187,14 +204,14 @@ class Character extends MovableObject {
      *
      * @returns {void}
      */
-    jump() {
-        this.speedY = 25;
+    characterJump() {
+        this.speedY = 26;
         if (!this.world.gameIsMuted) {
             this.jumping_sound.playbackRate = 0.7;
             this.jumping_sound.play();
         }
     }
-    
+
     /**
      * This function is responsible for making the character bounce.
      * It sets the vertical speed of the character to a positive value, simulating the bouncing motion after jumping ontop of an enemy.
@@ -204,5 +221,4 @@ class Character extends MovableObject {
     bounce() {
         this.speedY = 20;
     }
-
 }

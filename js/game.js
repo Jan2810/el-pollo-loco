@@ -121,7 +121,7 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode == 83) {
         keyboard.S = true;
     }
-    if (event.keyCode == 68 && !keyIsDown) {
+    if (event.keyCode == 68) {
         keyboard.D = true;
         keyIsDown = true;
     }
@@ -201,9 +201,11 @@ setInterval(() => {
     document.getElementById('bottleBtn').addEventListener('touchstart', (event) => {
         event.preventDefault();
         keyboard.D = true;
+        keyIsDown = true;
     });
     document.getElementById('bottleBtn').addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard.D = false;
+        keyIsDown = false;
     });
 }, 50);

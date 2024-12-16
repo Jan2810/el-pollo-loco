@@ -24,6 +24,7 @@ class ThrowableObject extends MovableObject {
         this.x = x;
         this.throw();
         this.animate();
+        this.lastInteraction = Date.now();
     }
 
     /**

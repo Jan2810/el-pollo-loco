@@ -2,7 +2,7 @@ class World {
     gameIsMuted;
     character = new Character();
     level = level1;
-    endboss = this.level.enemies[12];
+    endboss = this.level.enemies[24];
     canvas;
     ctx;
     keyboard;
@@ -35,6 +35,34 @@ class World {
         this.run();
         this.playBackgroundMusic();
     }
+    
+    /**
+     * Sets the world context for the character and endboss.
+     * This function is called when initializing the world to establish a reference to the world instance for the character and endboss.
+     *
+     * @function setWorld
+     * @memberof World
+     */
+    setWorld() {
+        this.character.world = this;
+        this.endboss.world = this;
+    }
+
+    /**
+     * Manages and controls the game's main loop.
+     * This function is responsible for checking collisions, collecting objects, and throwing objects at regular intervals.
+     *
+     * @function run
+     * @memberof World
+     */
+    run() {
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkBottleCollections();
+            this.checkCoinCollections();
+            this.throwObjects();
+        }, 100);
+    }
 
     /**
      * Toggles the game's mute status.
@@ -62,7 +90,7 @@ class World {
         let endbossmusic = false;
         setInterval(() => {
             if (!this.gameIsMuted) {
-                if (this.character.x > 3300) {
+                if (this.character.x > 2900) {
                     this.playEndbossMusic();
                     endbossmusic = true;
                 } else if (endbossmusic == false) {
@@ -114,41 +142,13 @@ class World {
     }
 
     /**
-     * Sets the world context for the character and endboss.
-     * This function is called when initializing the world to establish a reference to the world instance for the character and endboss.
-     *
-     * @function setWorld
-     * @memberof World
-     */
-    setWorld() {
-        this.character.world = this;
-        this.endboss.world = this;
-    }
-
-    /**
-     * Manages and controls the game's main loop.
-     * This function is responsible for checking collisions, collecting objects, and throwing objects at regular intervals.
-     *
-     * @function run
-     * @memberof World
-     */
-    run() {
-        setInterval(() => {
-            this.checkCollisions();
-            this.checkBottleCollections();
-            this.checkCoinCollections();
-            this.throwObjects();
-        }, 100);
-    }
-
-    /**
      * Manages and controls the throwing of objects by the character.
      *
      * @function throwObjects
      * @memberof World
      */
     throwObjects() {
-        if (this.keyboard.D && !this.keyboard.keyIsDown && this.statusbar[0].amount > 0) {
+        if (this.keyboard.D && this.statusbar[0].amount > 0) {
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();
@@ -187,7 +187,7 @@ class World {
             }
         }, 10);
     }
-    
+
     /**
      * Kills the given enemy by setting its 'isKilled' and 'isActive' properties to false.
      *
@@ -243,17 +243,19 @@ class World {
      * @memberof World
      */
     checkCollisions() {
+        let enemyKilled = false;
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken) && this.character.speedY < 0 && this.character.isColliding(enemy)) {
+            if (enemy.isActive && (enemy instanceof Chicken || enemy instanceof BabyChicken) && (this.character.speedY < 0) && this.character.isColliding(enemy)) {
                 enemy.isKilled = true;
                 enemy.isActive = false;
+                enemyKilled = true;
                 if (!this.gameIsMuted) {
                     this.chicken_dead_sound.volume = 0.1;
                     this.chicken_dead_sound.play();
                 }
                 this.character.bounce();
-            } 
-            else if (enemy.isActive && this.character.isColliding(enemy)) {
+            }
+            else if (!enemyKilled && enemy.isActive && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar[1].setPercentage(this.character.energy)
             }
@@ -302,18 +304,11 @@ class World {
      * Draws the game world
      *
      * @function draw
-     * @memberof World
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.salsaBottle);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObject);
-        this.addObjectsToMap(this.splashObject);
+        this.addObjectsToMapSummary();
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.statusbar);
         this.ctx.translate(this.camera_x, 0);
@@ -324,6 +319,21 @@ class World {
             self.draw();
         });
     }
+
+    /**
+     * Adds objects to the game map based on their type (summary).
+     * @function addObjectsToMapSummary
+     */
+    addObjectsToMapSummary() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.salsaBottle);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObject);
+        this.addObjectsToMap(this.splashObject);
+    }
+
 
     /**
      * Adds objects to the game map.
@@ -358,6 +368,7 @@ class World {
             this.flipImageBack(object);
         }
     }
+
     /**
      * Flips the image of the given game object horizontally.
      * This function is used to draw the object in the opposite direction.
