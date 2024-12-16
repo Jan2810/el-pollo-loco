@@ -22,7 +22,7 @@ class ThrowableObject extends MovableObject {
         this.width = 80;
         this.y = y;
         this.x = x;
-        this.throw();
+        // this.throw();
         this.animate();
         this.lastInteraction = Date.now();
     }
@@ -36,8 +36,13 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 35;
         this.applyGravity();
-        setInterval(() => {
-            this.x += 15;
+        console.log(this.otherDirection);
+        setInterval(() => {     
+            if (!this.otherDirection) {
+                this.x += 15;
+            } else {
+                this.x -= 15;
+            }
         }, 40);
     } 
     /**

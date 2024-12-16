@@ -1,7 +1,6 @@
 let canvas;
 let world;
 keyboard = new Keyboard();
-let keyIsDown = false;
 let gameIsMuted = true;;
 
 /**

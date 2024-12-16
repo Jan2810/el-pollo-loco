@@ -132,7 +132,7 @@ class Character extends MovableObject {
         this.walking_sound.playbackRate = 2;
         if (this.y === 150 && !this.world.gameIsMuted) {
             this.walking_sound.play();
-        }
+        }        
     }
 
     characterMoveLeft() {

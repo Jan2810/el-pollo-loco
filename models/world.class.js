@@ -15,6 +15,7 @@ class World {
     ];
     throwableObject = [];
     splashObject = [];
+    bottleThrow = true;
 
     chicken_dead_sound = new Audio('audio/chicken_dead.mp3');
     collect_bottle_sound = new Audio('audio/collect_bottle.mp3');
@@ -148,14 +149,18 @@ class World {
      * @memberof World
      */
     throwObjects() {
-        if (this.keyboard.D && this.statusbar[0].amount > 0) {
+        if (this.keyboard.D && this.canThrow && (this.statusbar[0].amount > 0)) {
             let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 200, this.keyboard);
             this.throwableObject.push(bottle);
             this.statusbar[0].reduceAmount();
             this.checkBottleCollision(bottle);
+            this.canThrow = false;
         } else if (this.keyboard.D && !this.statusbar[0].amount && !this.gameIsMuted) {
             this.error_sound.volume = 0.6;
             this.error_sound.play();
+        }
+        if (!this.keyboard.D) {
+            this.canThrow = true;
         }
     }
 
