@@ -103,35 +103,55 @@ class Character extends MovableObject {
     characterMovement() {
         setInterval(() => {
             this.walking_sound.pause();
-            let interaction = false;
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.characterMoveRight();
-                interaction = true;
-            }
-            if (this.world.keyboard.LEFT && this.x > 20) {
-                this.characterMoveLeft();
-                interaction = true;
-            }
-            if (this.world.keyboard.SPACE && this.canJump && !this.isAboveGround()) {
-                this.canJump = false;
-                this.characterJump();
-                interaction = true;
-            } else {
-                if (!this.world.keyboard.SPACE) {
-                    this.canJump = true;
-                    this.jumping_sound.pause();
-                }
-            }
-            if (this.world.keyboard.D) {
-                interaction = true;
-            }
-            this.world.camera_x = -this.x + 50;
-            if (interaction) {
-                this.lastInteraction = Date.now();
-            }
+            let interaction = this.handleKeyboardInput();
+            this.updateCameraPosition();
+            if (interaction) this.lastInteraction = Date.now();
         }, 1000 / 60);
     }
 
+    /**
+     * This function handles the character's movement and interaction with the keyboard inputs.
+     * It continuously updates the character's position and plays sound effects based on the keyboard inputs.
+     *
+     * @returns {boolean} - Returns true if any interaction with the keyboard occurred, false otherwise.
+     */
+    handleKeyboardInput() {
+        let interaction = false;
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.characterMoveRight();
+            interaction = true;
+        }
+        if (this.world.keyboard.LEFT && this.x > 20) {
+            this.characterMoveLeft();
+            interaction = true;
+        }
+        if (this.world.keyboard.SPACE && this.canJump && !this.isAboveGround()) {
+            this.canJump = false;
+            this.characterJump();
+            interaction = true;
+        } else if (!this.world.keyboard.SPACE) {
+            this.canJump = true;
+            this.jumping_sound.pause();
+        }
+        if (this.world.keyboard.D) {
+            interaction = true;
+        }
+        return interaction;
+    }
+
+    /**
+     * Updates the camera position based on the character's position.
+     * The camera's x-coordinate is set to follow the character's x-coordinate,
+     * with a slight offset to center the character in the viewport.
+     */
+    updateCameraPosition() {
+        this.world.camera_x = -this.x + 50;
+    }
+
+    /**
+     * This function handles the character's movement to the right.
+     * It updates the character's position, direction, and sound effect.
+     */
     characterMoveRight() {
         this.moveRight();
         this.otherDirection = false;
@@ -141,6 +161,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the character's movement to the left.
+     * It updates the character's position, direction, and sound effect.
+     */
     characterMoveLeft() {
         this.moveLeft();
         this.otherDirection = true;
@@ -149,36 +173,83 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Handles the character's animations.
+     * This function uses an interval to continuously update the character's animation based on its current state.
+     */
     characterAnimations() {
         setInterval(() => {
-            let interaction = false;
             if (this.isDead()) {
                 this.characterDeadAnimation();
-            } else {
-                if (this.isAboveGround()) {
-                    this.playAnimation(this.IMAGES_JUMPING);
-                } else {
-                    if (this.isHurt()) {
-                        this.characterHurtAnimation();
-                        interaction = true;
-                    } else {
-                        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {
-                            this.playAnimation(this.IMAGES_WALKING);
-                        } else if (Date.now() - this.lastInteraction > 5000) {
-                            this.playAnimation(this.IMAGES_LONG_IDLE);
-                            this.playSnoringSound();
-                        } else {
-                            this.playAnimation(this.IMAGES_IDLE);
-                        }
-                    }
-                    if (interaction) {
-                        this.lastInteraction = Date.now();
-                    }
-                }
+                return;
             }
-        }, 200);
+            this.handleAirAnimations();
+        }, 150);
+    }
+    
+    /**
+     * Handles the character's animations when in the air (not on the ground).
+     * It checks if the character is above the ground and plays the jumping animation accordingly.
+     * If the character is not above the ground, it calls the handleGroundAnimations function.
+     */
+    handleAirAnimations() {
+        if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else {
+            this.handleGroundAnimations();
+        }
     }
 
+    /**
+     * Handles the character's animations when on the ground (not in the air).
+     * It checks the character's state and plays the corresponding animation.
+     */
+    handleGroundAnimations() {
+        let interaction = false;
+        if (this.isHurt()) {
+            this.characterHurtAnimation();
+            interaction = true;
+        } 
+        else if (this.isWalking()) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } 
+        else if (this.isLongIdle()) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+            this.playSnoringSound();
+        } 
+        else {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+        if (interaction) {
+            this.lastInteraction = Date.now();
+        }
+    }
+
+    /**
+     * Checks if the character is currently walking.
+     * @returns {boolean} - Returns true if the character is walking (right or left arrow keys are pressed and the character is on the ground), false otherwise.
+     */
+    isWalking() {
+        return (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && this.y == 150;
+    }
+
+    
+    /**
+     * Checks if the character is in a long idle state.
+     * The character is considered in a long idle state if it has not moved for more than 5 seconds.
+     * @returns {boolean} - Returns true if the character is in a long idle state, false otherwise.
+     */
+    isLongIdle() {
+        return Date.now() - this.lastInteraction > 5000;
+    }
+
+
+    /**
+     * Handles the character's hurt animation and sound effect.
+     * This function is called when the character is in a hurt state.
+     * It plays the hurt animation and sound effect if the game is not muted.
+     *
+     */
     characterHurtAnimation() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
@@ -189,6 +260,11 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Handles the character's snoring sound effect.
+     * This function is called when the character is in a long idle state (not moving for more than 5 seconds).
+     * It plays the snoring sound effect if the game is not muted.
+     */
     playSnoringSound() {
         if (!this.world.gameIsMuted) {
             this.snoring_sound.volume = 1;
