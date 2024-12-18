@@ -9,11 +9,18 @@ class DrawableObject {
     intervalIDs = [];
 
 
+    /**
+     * This function loads an image into the DrawableObject's image property.
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+
+    /**
+     * This function loads multiple images into an image cache for later use.
+     */
     loadImages(array) {
         array.forEach(path => {
             let img = new Image();
@@ -22,29 +29,15 @@ class DrawableObject {
         });
     }
 
+
+    /**
+     * Draws the DrawableObject on the canvas using the provided context.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    // drawFrame(ctx) {
-    //     if (this instanceof Character || this instanceof Chicken || this instanceof BabyChicken || this instanceof Endboss || this instanceof Coin || this instanceof SalsaBottle || this instanceof ThrowableObject) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = '5';
-    //         ctx.strokeStyle = 'blue';
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
-    //     };
-    // }
 
-    // drawCollisionFrame(ctx) {
-    //     if (this instanceof Character || this instanceof Chicken || this instanceof BabyChicken || this instanceof Endboss || this instanceof Coin || this instanceof SalsaBottle || this instanceof ThrowableObject) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = '3';
-    //         ctx.strokeStyle = 'red';
-    //         ctx.rect(this.x + this.offsetLeft, this.y + this.offsetTop, this.width - this.offsetLeft - this.offsetRight, this.height - this.offsetTop -this.offsetBottom);
-    //         ctx.stroke();
-    //     };
-    // }
 
     /**
      * This function stops the game and displays the game lost overlay after a 1-second delay.
@@ -83,7 +76,7 @@ class DrawableObject {
         }, 2000);
     }
 
-    
+
     /**
      * This function clears all intervals by iterating through a range of possible interval IDs and using the clearInterval function.
      * This is a workaround for the fact that clearInterval does not accept an array of IDs, and there is no built-in method to retrieve all interval IDs.
