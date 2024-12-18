@@ -110,21 +110,50 @@ class Character extends MovableObject {
     }
 
     /**
-     * This function handles the character's movement and interaction with the keyboard inputs.
-     * It continuously updates the character's position and plays sound effects based on the keyboard inputs.
-     *
-     * @returns {boolean} - Returns true if any interaction with the keyboard occurred, false otherwise.
+     * Handles the character's keyboard inputs and updates the character's state accordingly.
      */
     handleKeyboardInput() {
         let interaction = false;
+        interaction = this.handleRightMovement(interaction);
+        interaction = this.handleLeftMovement(interaction);
+        interaction = this.handleJump(interaction);
+        interaction = this.handleOtherKey(interaction);
+        return interaction;
+    }
+
+
+    /**
+     * Handles the character's movement to the right.
+     * It checks if the right arrow key is pressed and the character is within the level boundaries.
+     * If the conditions are met, it calls the characterMoveRight function and updates the interaction flag.
+     */
+    handleRightMovement(interaction) {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.characterMoveRight();
             interaction = true;
         }
+        return interaction;
+    }
+
+
+    /**
+     * Handles the character's movement to the left.
+     * It checks if the left arrow key is pressed and the character is within the level boundaries.
+     * If the conditions are met, it calls the characterMoveLeft function and updates the interaction flag.
+     */
+    handleLeftMovement(interaction) {
         if (this.world.keyboard.LEFT && this.x > 20) {
             this.characterMoveLeft();
             interaction = true;
         }
+        return interaction;
+    }
+
+    
+    /**
+     * Handles the character's jump action based on keyboard input.
+     */
+    handleJump(interaction) {
         if (this.world.keyboard.SPACE && this.canJump && !this.isAboveGround()) {
             this.canJump = false;
             this.characterJump();
@@ -133,12 +162,21 @@ class Character extends MovableObject {
             this.canJump = true;
             this.jumping_sound.pause();
         }
+        return interaction;
+    }
+
+
+    /**
+     * Handles the character's other keyboard inputs and updates the character's state accordingly.
+     */
+    handleOtherKey(interaction) {
         if (this.world.keyboard.D) {
             interaction = true;
         }
         return interaction;
     }
 
+    
     /**
      * Updates the camera position based on the character's position.
      * The camera's x-coordinate is set to follow the character's x-coordinate,
@@ -147,6 +185,7 @@ class Character extends MovableObject {
     updateCameraPosition() {
         this.world.camera_x = -this.x + 50;
     }
+
 
     /**
      * This function handles the character's movement to the right.
@@ -161,6 +200,7 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * This function handles the character's movement to the left.
      * It updates the character's position, direction, and sound effect.
@@ -172,6 +212,7 @@ class Character extends MovableObject {
             this.walking_sound.play();
         }
     }
+
 
     /**
      * Handles the character's animations.
@@ -187,6 +228,7 @@ class Character extends MovableObject {
         }, 150);
     }
     
+
     /**
      * Handles the character's animations when in the air (not on the ground).
      * It checks if the character is above the ground and plays the jumping animation accordingly.
@@ -199,6 +241,7 @@ class Character extends MovableObject {
             this.handleGroundAnimations();
         }
     }
+
 
     /**
      * Handles the character's animations when on the ground (not in the air).
@@ -224,6 +267,7 @@ class Character extends MovableObject {
             this.lastInteraction = Date.now();
         }
     }
+
 
     /**
      * Checks if the character is currently walking.
@@ -260,6 +304,7 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * Handles the character's snoring sound effect.
      * This function is called when the character is in a long idle state (not moving for more than 5 seconds).
@@ -271,6 +316,7 @@ class Character extends MovableObject {
             this.snoring_sound.play();
         }
     }
+
 
     /**
      * This function handles the character's death animation and sound effect.
@@ -285,6 +331,7 @@ class Character extends MovableObject {
         this.stopLost();
         this.playAnimation(this.IMAGES_DEAD);
     }
+
 
     /**
      * This function is responsible for making the character jump.
@@ -301,6 +348,7 @@ class Character extends MovableObject {
         }
     }
 
+    
     /**
      * This function is responsible for making the character bounce.
      * It sets the vertical speed of the character to a positive value, simulating the bouncing motion after jumping ontop of an enemy.

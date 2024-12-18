@@ -392,10 +392,6 @@ class World {
     /**
      * Restores the context after flipping the image back to its original state.
      * This function is used to draw the object in the correct direction.
-     *
-     * @function flipImageBack
-     * @memberof World
-     * @param {Object} object - The game object to be restored.
      */
     flipImageBack(object) {
         object.x = object.x * -1; // Restore the original x position of the object

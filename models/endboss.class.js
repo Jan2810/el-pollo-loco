@@ -71,6 +71,172 @@ class Endboss extends MovableObject {
     }
 
     /**
+     * Manages the endboss's animation. It uses setInterval to create a loop that changes the endboss's image
+     * based on its current state (walking, hurt, or dead). It also handles the endboss's animation switching.
+     */
+    animate() {
+        let animationInterval = setInterval(() => {
+            if (this.isDead()) {
+                this.handleDeathAnimation();
+            } else if (this.isHurt) {
+                this.handleHurtAnimation();
+            } else {
+                this.playWalkingAnimation();
+            }
+        }, 300);
+        this.intervalIDs.push(animationInterval);
+    }
+
+
+    /**
+     * Handles the endboss's death animation.
+     * It plays the death animation, plays the death sound, and stops the winning animation.
+     */
+    handleDeathAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        if (!this.world.gameIsMuted) {
+            this.dead_sound.play();
+        }
+        this.stopWin();
+    }
+
+
+    /**
+     * Handles the endboss's hurt animation.
+     * It plays the hurt animation, plays the hurt sound, and sets the isHurt flag to false after a certain time.
+     */
+    handleHurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (!this.world.gameIsMuted) {
+            this.hurt_sound.play();
+        }
+        setTimeout(() => {
+            this.isHurt = false;
+        }, 600);
+    }
+
+
+    /**
+     * Handles the endboss's walking animation.
+     * It plays the walking animation by changing the endboss's image based on the IMAGES_WALK array.
+     */
+    playWalkingAnimation() {
+        this.playAnimation(this.IMAGES_WALK);
+    }
+
+
+    /**
+     * Handles the endboss's movement animation.
+     * It starts the movement interval and the direction change interval.
+     */
+    movementAnimation() {
+        let movementInterval = this.startMovementInterval();
+        this.scheduleDirectionChange(movementInterval);
+    }
+
+
+    /**
+     * Starts the movement interval for the endboss.
+    */
+    startMovementInterval() {
+        let movementInterval = setInterval(() => {
+            if (!this.isDead()) {
+                this.updatePosition();
+            }
+        }, 1000 / 60);
+        this.intervalIDs.push(movementInterval);
+        return movementInterval;
+    }
+
+
+    /**
+     * Updates the endboss's position based on its walking direction.
+     */
+    updatePosition() {
+        if (this.isWalkingLeft) {
+            this.x -= this.speedX;
+        } else {
+            this.x += this.speedX;
+        }
+    }
+
+
+    /**
+     * Schedules a direction change for the endboss after a specified time.
+     */
+    scheduleDirectionChange(movementInterval) {
+        setTimeout(() => {
+            this.toggleWalkingDirection();
+            clearInterval(movementInterval);
+            this.attackingAnimation();
+        }, 3000);
+    }
+
+
+    /**
+     * Toggles the endboss's walking direction.
+     */
+    toggleWalkingDirection() {
+        this.isWalkingLeft = !this.isWalkingLeft;
+    }
+
+
+    /**
+     * Handles the endboss's attack animation.
+     * It starts the attack interval and schedules a direction change after a specified time.
+     */
+    attackingAnimation() {
+        let attackInterval = this.startAttackInterval();
+        this.scheduleAttackDirectionChange(attackInterval);
+    }
+
+    
+    /**
+     * Starts the attack interval for the endboss.
+     */
+    startAttackInterval() {
+        let attackInterval = setInterval(() => {
+            this.playAttackOrAlertAnimation();
+        }, 300);
+        this.intervalIDs.push(attackInterval);
+        return attackInterval;
+    }
+
+    
+    /**
+     * This function plays the attack or alert animation based on the endboss's walking direction.
+     */
+    playAttackOrAlertAnimation() {
+        if (this.isWalkingLeft === false) {
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else {
+            this.playAnimation(this.IMAGES_ALERT);
+        }
+    }
+
+    
+    /**
+     * Schedules a direction change for the endboss after a specified time.
+     */
+    scheduleAttackDirectionChange(attackInterval) {
+        setTimeout(() => {
+            this.toggleOtherDirection();
+            clearInterval(attackInterval);
+            this.movementAnimation();
+        }, 2000);
+    }
+
+    
+    /**
+     * Toggles the endboss's other direction.
+     * This function is used to change the endboss's direction during its attack animation.
+     */
+    toggleOtherDirection() {
+        this.otherDirection = !this.otherDirection;
+    }
+    
+
+    /**
      * This function is called when the endboss object is hit by a bottle.
      * It reduces the endboss's energy by 40 points and checks if the endboss's energy is depleted.
      * If the endboss's energy is depleted, it calls the isDead() method.
@@ -84,88 +250,5 @@ class Endboss extends MovableObject {
             this.isDead();
         }
     }
-
-    /**
-     * This function manages the endboss's animation. It uses setInterval to create a loop that changes the endboss's image
-     * based on its current state (walking, hurting, or dead). It also plays the corresponding sound effect.
-     *
-     * @returns {void}
-     */
-    animate() {
-        let animationInterval = setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                if (!this.world.gameIsMuted) {
-                    this.dead_sound.play();
-                }
-                this.stopWin();
-            } else if (this.isHurt == true) {
-                this.playAnimation(this.IMAGES_HURT);
-                if (!this.world.gameIsMuted) {
-                    this.hurt_sound.play();
-                }
-                setTimeout(() => {
-                    this.isHurt = false;
-                }, 600);
-            } else {
-                this.playAnimation(this.IMAGES_WALK);
-            }
-        }, 300);
-        this.intervalIDs.push(animationInterval);
-    }
-
-
-    /**
-     * This function manages the endboss's movement animation. It uses setInterval to create a loop that changes the endboss's position
-     * based on its current walking direction. It also handles the endboss's walking direction change after a certain time.
-     *
-     * @returns {void}
-     */
-    movementAnimation() {
-        let movementInterval = setInterval(() => {
-            if (!this.isDead()) {
-                if (this.isWalkingLeft) {
-                    this.x -= this.speedX;
-                } else {
-                    this.x += this.speedX;
-                }
-            }
-        }, 1000 / 60);
-        setTimeout(() => {
-            if (this.isWalkingLeft === true) {
-                this.isWalkingLeft = false;
-            } else {
-                this.isWalkingLeft = true;
-            }
-            clearInterval(movementInterval);
-            this.attackingAnimation();
-        }, 3000);
-        this.intervalIDs.push(movementInterval);
-    }
-
-    /**
-     * This function manages the endboss's attacking animation. It uses setInterval to create a loop that changes the endboss's image
-     * based on its current walking direction. It also handles the endboss's attacking animation and switching back to its walking animation.
-     *
-     * @returns {void}
-     */
-    attackingAnimation() {
-        let attackInterval = setInterval(() => {
-            if (this.isWalkingLeft == false) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.isWalkingLeft == true) {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
-        }, 300);
-        setTimeout(() => {
-            if (this.otherDirection == true) {
-                this.otherDirection = false;
-            } else {
-                this.otherDirection = true;
-            }
-            clearInterval(attackInterval);
-            this.movementAnimation();
-        }, 2000);
-        this.intervalIDs.push(attackInterval);
-    }
 }
+

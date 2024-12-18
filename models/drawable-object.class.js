@@ -83,10 +83,7 @@ class DrawableObject {
         }, 2000);
     }
 
-
-    clearAllIntervals() {
-        for (let i = 1; i < 9999; i++) window.clearInterval(i);
-    }
+    
     /**
      * This function clears all intervals by iterating through a range of possible interval IDs and using the clearInterval function.
      * This is a workaround for the fact that clearInterval does not accept an array of IDs, and there is no built-in method to retrieve all interval IDs.

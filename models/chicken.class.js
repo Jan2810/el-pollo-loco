@@ -3,7 +3,7 @@ class Chicken extends MovableObject {
     y = 335;
     height = 80;
     width = 70;
-    speedX = 0.1;
+    speedX = 3.1;
     offsetTop = 5;
     offsetBottom = 5;
     offsetLeft = 5;
@@ -31,16 +31,19 @@ class Chicken extends MovableObject {
     }
 
     /**
-     * Animates the chicken's movement and appearance.
-     *
-     * This function sets up three intervals:
-     * 1. A movement interval that moves the chicken left while it's not killed.
-     * 2. A walking animation interval that changes the chicken's image to create a walking animation.
-     * 3. A death check interval that loads the dead image when the chicken is killed.
-     *
-     * @returns {void}
+     * Animates the chicken object by starting its movement, walking animation, and death check.
      */
     animate() {
+        this.startMoving();
+        this.startWalkingAnimation();
+        this.startDeathCheck();
+    }
+
+    
+    /**
+     * Starts the chicken's movement by setting up an interval that calls the moveLeft method.
+     */
+    startMoving() {
         let moveInterval = setInterval(() => {
             if (!this.isKilled) {
                 this.moveLeft();
@@ -49,7 +52,13 @@ class Chicken extends MovableObject {
             }
         }, 1000 / 60);
         this.intervalIDs.push(moveInterval);
+    }
 
+    
+    /**
+     * Starts the chicken's walking animation by setting up an interval that calls the playAnimation method.
+     */
+    startWalkingAnimation() {
         let walkingAnimationInterval = setInterval(() => {
             if (!this.isKilled) {
                 this.playAnimation(this.IMAGES_WALKING);
@@ -58,7 +67,14 @@ class Chicken extends MovableObject {
             }
         }, 200);
         this.intervalIDs.push(walkingAnimationInterval);
+    }
 
+    
+    /**
+     * Starts the chicken's death check by setting up an interval that checks if the chicken is killed.
+     * If the chicken is killed, it loads the dead image and clears the interval.
+     */
+    startDeathCheck() {
         let deathCheckInterval = setInterval(() => {
             if (this.isKilled) {
                 this.loadImage(this.IMAGES_DEAD);
@@ -67,5 +83,7 @@ class Chicken extends MovableObject {
         }, 200);
         this.intervalIDs.push(deathCheckInterval);
     }
+
+    
 
 }
