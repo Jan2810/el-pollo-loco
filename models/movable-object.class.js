@@ -1,6 +1,6 @@
 class MovableObject extends DrawableObject {
     speed = 0.15;
-    otherDirection;
+    otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     lastHit = 0;
@@ -131,11 +131,11 @@ class MovableObject extends DrawableObject {
      * @returns {void}
      */
     playAnimation(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
+        if (this.currentImage >= images.length) {
+            this.currentImage = 0;
+        }
+        let path = images[this.currentImage];
         this.img = this.imageCache[path];
         this.currentImage++;
-        return;
     }
-
 }

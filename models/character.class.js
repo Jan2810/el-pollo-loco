@@ -112,11 +112,17 @@ class Character extends MovableObject {
                 this.characterMoveLeft();
                 interaction = true;
             }
-            if (!this.isAboveGround() && this.world.keyboard.SPACE) {
+            if (this.world.keyboard.SPACE && this.canJump && !this.isAboveGround()) {
+                this.canJump = false;
                 this.characterJump();
                 interaction = true;
+            } else {
+                if (!this.world.keyboard.SPACE) {
+                    this.canJump = true;
+                    this.jumping_sound.pause();
+                }
             }
-            if(this.world.keyboard.D) {
+            if (this.world.keyboard.D) {
                 interaction = true;
             }
             this.world.camera_x = -this.x + 50;
@@ -132,7 +138,7 @@ class Character extends MovableObject {
         this.walking_sound.playbackRate = 2;
         if (this.y === 150 && !this.world.gameIsMuted) {
             this.walking_sound.play();
-        }        
+        }
     }
 
     characterMoveLeft() {
@@ -145,6 +151,7 @@ class Character extends MovableObject {
 
     characterAnimations() {
         setInterval(() => {
+            let interaction = false;
             if (this.isDead()) {
                 this.characterDeadAnimation();
             } else {
@@ -152,8 +159,8 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_JUMPING);
                 } else {
                     if (this.isHurt()) {
-                        this.playAnimation(this.IMAGES_HURT);
-                        this.playHurtSound();
+                        this.characterHurtAnimation();
+                        interaction = true;
                     } else {
                         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT && this.y == 150) {
                             this.playAnimation(this.IMAGES_WALKING);
@@ -164,15 +171,21 @@ class Character extends MovableObject {
                             this.playAnimation(this.IMAGES_IDLE);
                         }
                     }
+                    if (interaction) {
+                        this.lastInteraction = Date.now();
+                    }
                 }
             }
         }, 200);
     }
 
-    playHurtSound() {
-        if (!this.world.gameIsMuted) {
-            this.hurt_sound.volume = 0.3;
-            this.hurt_sound.play();
+    characterHurtAnimation() {
+        if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+            if (!this.world.gameIsMuted) {
+                this.hurt_sound.volume = 0.3;
+                this.hurt_sound.play();
+            };
         }
     }
 

@@ -22,7 +22,6 @@ class ThrowableObject extends MovableObject {
         this.width = 80;
         this.y = y;
         this.x = x;
-        // this.throw();
         this.animate();
         this.lastInteraction = Date.now();
     }
@@ -36,15 +35,14 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 35;
         this.applyGravity();
-        console.log(this.otherDirection);
-        setInterval(() => {     
+        setInterval(() => {
             if (!this.otherDirection) {
                 this.x += 15;
             } else {
                 this.x -= 15;
             }
         }, 40);
-    } 
+    }
     /**
      * This function is responsible for animating the throwable object based on keyboard input.
      * It checks if the 'D' key is pressed and, if so, calls the 'throw' method and starts the animation.

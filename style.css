@@ -274,11 +274,6 @@ canvas {
     canvas {
         width: 100%;
     }
-
-    body {
-        background-size: contain;
-        background-position: top;
-    }
 }
 
 @media only screen and (max-height: 480px) {
